@@ -7,7 +7,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js(x)?$/,
+        test: /\.jsx?$/,
         loader: 'babel-loader',
         options: {
           presets: ['@babel/preset-env']
@@ -28,7 +28,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      '@': path.resolve(__dirname, 'src/')
+      '@': path.resolve(__dirname, 'src')
     }
   },
   plugins: [
