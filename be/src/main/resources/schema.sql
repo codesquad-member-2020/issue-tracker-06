@@ -1,4 +1,4 @@
-drop table if exists member;
+drop table if exists user;
 
 create table user (
     user_id int primary key auto_increment,
