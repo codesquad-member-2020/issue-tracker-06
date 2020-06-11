@@ -20,8 +20,10 @@ const GlobalStyleProvider = ({ children }) => {
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
-  * {
+  html * {
     box-sizing: border-box;
+    font-size: ${theme.fontSize.base};
+    font-family: "Roboto", "Apple SD Gothic Neo", "Helvetica", "Arial", sans-serif;
   }
 `;
 
