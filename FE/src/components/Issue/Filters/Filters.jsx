@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Box, Button, ButtonGroup, InputBase, InputAdornment, FormControl, Select, MenuItem } from '@material-ui/core';
 import styled from 'styled-components';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import SearchIcon from '@material-ui/icons/Search';
 import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
 import EventNoteOutlinedIcon from '@material-ui/icons/EventNoteOutlined';
 
 const Filters = () => {
-  const [filter, setFilter] = useState('is:open');
+  const [filter, setFilter] = useState('open');
   const [open, setOpen] = useState(false);
   const handleChange = (event) => {
     setFilter(event.target.value);
@@ -51,7 +50,7 @@ const Filters = () => {
           }
           placeholder="Search all issues"
           inputProps={{ 'aria-label': 'Search all issues' }}
-          value={`is: ${filter}`}
+          value={`is:${filter}`}
         />
       </FormWrap>
       <ButtonWrapBox display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">

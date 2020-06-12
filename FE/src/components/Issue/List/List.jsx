@@ -14,18 +14,26 @@ const List = ({ bodyCells }) => {
               <Checkbox size="small" className="check-wrap" />
             </Grid>
             <Grid item xs={7}>
-              <IssueTitle>{bodyCell.title}</IssueTitle>
+              <IssueTitle>
+                {bodyCell.title}
+                {bodyCell.label.length
+                  ? bodyCell.label.map((label) => {
+                      return (
+                        <LabelWrap key={label.background} background={label.background} color={label.color}>
+                          {label.title}
+                        </LabelWrap>
+                      );
+                    })
+                  : null}
+              </IssueTitle>
               <IssueDetailWrap>
                 <span>
                   #{bodyCell.id} opened yesterday by <BasicLink to={'/'}>{bodyCell.author}</BasicLink>
                 </span>
-                <span>
-                  {0} of {6} <span></span>
-                  <BasicLink to={'/'}>
-                    <EventNoteIcon style={{ fontSize: 15, verticalAlign: 'middle' }} />
-                    {bodyCell.milestone}
-                  </BasicLink>
-                </span>
+                <BasicLink to={'/'}>
+                  <EventNoteIcon style={{ fontSize: 15, verticalAlign: 'middle' }} />
+                  {bodyCell.milestone}
+                </BasicLink>
               </IssueDetailWrap>
             </Grid>
             <GridImgWrap item xs>
@@ -98,6 +106,7 @@ const BasicLink = styled(Link)`
   color: ${({ theme }) => theme.color.gray};
   text-decoration: none;
   outline: none;
+  margin-left: 3px;
   &:active,
   &:focus,
   &:visited {
@@ -123,5 +132,16 @@ const ImgLink = styled(Link)`
   img {
     width: 100%;
     height: 100%;
+  }
+`;
+
+const LabelWrap = styled.span`
+  padding: 2px 5px;
+  color: ${(props) => props.color};
+  background: ${(props) => props.background};
+  margin-left: 3px;
+  border-radius: 3px;
+  &:first-child {
+    margin-left: 5px;
   }
 `;

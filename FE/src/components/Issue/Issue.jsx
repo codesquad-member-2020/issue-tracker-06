@@ -12,7 +12,18 @@ const Issue = () => {
     {
       id: '1',
       title: '[FE] UI 구현',
-      label: ['feature', 'FE'],
+      label: [
+        {
+          title: 'bug',
+          background: 'green',
+          color: '#ffffff'
+        },
+        {
+          title: 'feature',
+          background: 'yellow',
+          color: '#000000'
+        }
+      ],
       author: 'kiyoesjh',
       milestone: '[FE] 1주차',
       assignee: [
@@ -23,12 +34,13 @@ const Issue = () => {
     {
       id: '2',
       title: '[BE] cors',
-      label: ['feature', 'BE'],
+      label: [],
       author: 'beemiel',
       milestone: '[BE] 2주차',
       assignee: [{ id: '@beemiel', url: 'https://avatars1.githubusercontent.com/u/58145890?s=40&v=4' }]
     }
   ];
+
   return (
     <div>
       <Header />
