@@ -70,7 +70,7 @@ const theme = {
   }
  `,
   input: ` 
-  color:'#586069';
+  color: #586069;
   border: 1px solid #d1d5da;
   border-radius: 3px;
   outline: none;

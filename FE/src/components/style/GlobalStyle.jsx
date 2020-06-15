@@ -25,6 +25,10 @@ const GlobalStyle = createGlobalStyle`
     font-size: ${theme.fontSize.base};
     font-family: "Roboto", "Apple SD Gothic Neo", "Helvetica", "Arial", sans-serif;
   }
+  button {
+    background: none;
+    border: 0;
+  }
 `;
 
 export default GlobalStyleProvider;
