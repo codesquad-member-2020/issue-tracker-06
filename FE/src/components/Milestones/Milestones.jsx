@@ -4,12 +4,14 @@ import styled from 'styled-components';
 import LabelsMilestonesTap from '@/components/LabelsMilestonesTap/LabelsMilestonesTap';
 import MilestoneDetail from '@/components/Milestones/MilestoneDetail/MilestoneDetail';
 import MilestoneInfo from '@/components/Milestones/MilestoneInfo/MilestoneInfo';
+import Header from '@/components/header/Header';
 
 const Wrapper = styled.div`
   margin: auto;
   width: 1000px;
   box-sizing: border-box;
   color: ${({ theme }) => theme.mainFontColor};
+  margin-top: 25px;
 `;
 
 const ButtonWrapper = styled.div`
@@ -60,36 +62,39 @@ const ListItem = styled.div`
 
 const Milestone = () => {
   return (
-    <Wrapper>
-      <ButtonWrapper>
-        <LabelsMilestonesTap />
-        <NewButton>New milestone</NewButton>
-      </ButtonWrapper>
+    <>
+      <Header />
+      <Wrapper>
+        <ButtonWrapper>
+          <LabelsMilestonesTap />
+          <NewButton>New milestone</NewButton>
+        </ButtonWrapper>
 
-      <List>
-        <ListInfo>
-          <MilestoneCount>2 Open / 0 Closed</MilestoneCount>
-        </ListInfo>
-        <ListItemWrapper>
-          <ListItem>
-            <MilestoneDetail />
-            <MilestoneInfo />
-          </ListItem>
-        </ListItemWrapper>
-        <ListItemWrapper>
-          <ListItem>
-            <MilestoneDetail />
-            <MilestoneInfo />
-          </ListItem>
-        </ListItemWrapper>
-        <ListItemWrapper>
-          <ListItem>
-            <MilestoneDetail />
-            <MilestoneInfo />
-          </ListItem>
-        </ListItemWrapper>
-      </List>
-    </Wrapper>
+        <List>
+          <ListInfo>
+            <MilestoneCount>2 Open / 0 Closed</MilestoneCount>
+          </ListInfo>
+          <ListItemWrapper>
+            <ListItem>
+              <MilestoneDetail />
+              <MilestoneInfo />
+            </ListItem>
+          </ListItemWrapper>
+          <ListItemWrapper>
+            <ListItem>
+              <MilestoneDetail />
+              <MilestoneInfo />
+            </ListItem>
+          </ListItemWrapper>
+          <ListItemWrapper>
+            <ListItem>
+              <MilestoneDetail />
+              <MilestoneInfo />
+            </ListItem>
+          </ListItemWrapper>
+        </List>
+      </Wrapper>
+    </>
   );
 };
 

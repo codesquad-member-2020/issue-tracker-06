@@ -2,12 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 import LabelsMilestonesTap from '@/components/LabelsMilestonesTap/LabelsMilestonesTap';
+import Header from '@/components/header/Header';
 
 const Wrapper = styled.div`
   margin: auto;
   width: 1000px;
   box-sizing: border-box;
   color: ${({ theme }) => theme.mainFontColor};
+  margin-top: 55px;
 `;
 
 const PageTitleWrapper = styled.div`
@@ -70,34 +72,37 @@ const CreatButton = styled.button`
 
 const NewMilestone = () => {
   return (
-    <Wrapper>
-      <PageTitleWrapper>
-        {/* <LabelsMilestonesTap /> */}
+    <>
+      <Header />
+      <Wrapper>
+        <PageTitleWrapper>
+          {/* <LabelsMilestonesTap /> */}
 
-        <PageTitle>New milestone</PageTitle>
-        <PageTitleContent>
-          Create a new milestone to help organize your issues and pull requests. Learn more about{' '}
-          <span>milestones and issues</span>.
-        </PageTitleContent>
-      </PageTitleWrapper>
-      <NewMilestoneContentWrapper>
-        <InputWrapper>
-          <InputTitle>Title</InputTitle>
-          <Input placeholder="Title" />
-        </InputWrapper>
-        <InputWrapper>
-          <InputTitle>Due date (optional)</InputTitle>
-          <Input defaultValue="연도. 월. 일" />
-        </InputWrapper>
-        <InputWrapper>
-          <InputTitle>Description</InputTitle>
-          <Description />
-        </InputWrapper>
-      </NewMilestoneContentWrapper>
-      <ButtonWrapper>
-        <CreatButton>Create milestone</CreatButton>
-      </ButtonWrapper>
-    </Wrapper>
+          <PageTitle>New milestone</PageTitle>
+          <PageTitleContent>
+            Create a new milestone to help organize your issues and pull requests. Learn more about{' '}
+            <span>milestones and issues</span>.
+          </PageTitleContent>
+        </PageTitleWrapper>
+        <NewMilestoneContentWrapper>
+          <InputWrapper>
+            <InputTitle>Title</InputTitle>
+            <Input placeholder="Title" />
+          </InputWrapper>
+          <InputWrapper>
+            <InputTitle>Due date (optional)</InputTitle>
+            <Input defaultValue="연도. 월. 일" />
+          </InputWrapper>
+          <InputWrapper>
+            <InputTitle>Description</InputTitle>
+            <Description />
+          </InputWrapper>
+        </NewMilestoneContentWrapper>
+        <ButtonWrapper>
+          <CreatButton>Create milestone</CreatButton>
+        </ButtonWrapper>
+      </Wrapper>
+    </>
   );
 };
 
