@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
 
 const NewLabelContentWrapper = styled.div`
   display: flex;
@@ -20,25 +21,33 @@ const NewLabelTitle = styled.div`
 
 const NewLabelInput = styled.input`
   ${({ theme }) => theme.input};
-  width: 200px;
+  width: 160px;
+  height: 30px;
 `;
 
 const ColorInputWrapper = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const ColorChangeButton = styled.button`
   background: #e8ea80;
   outline: 0;
   border: 0;
-  width: 38px;
+  width: 30px;
+  height: 30px;
   border-radius: 5px;
   margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
 `;
 
 const ColorChangeInput = styled.input`
   ${({ theme }) => theme.input};
-  width: 60px;
+  width: 70px;
+  height: 30px;
 `;
 
 const NewLabelButtonWrapper = styled.div`
@@ -69,12 +78,14 @@ const NewLabel = () => {
       </NewLabelInputWrapper>
       <NewLabelInputWrapper>
         <NewLabelTitle>Description</NewLabelTitle>
-        <NewLabelInput placeholder="Description (optional)" style={{ width: '350px' }}></NewLabelInput>
+        <NewLabelInput placeholder="Description (optional)" style={{ width: '390px' }}></NewLabelInput>
       </NewLabelInputWrapper>
       <NewLabelInputWrapper>
         <NewLabelTitle>Color</NewLabelTitle>
         <ColorInputWrapper>
-          <ColorChangeButton></ColorChangeButton>
+          <ColorChangeButton>
+            <AutorenewIcon fontSize="small" />
+          </ColorChangeButton>
           <ColorChangeInput type="text" defaultValue="#E8EA80" onChange={colorInputChangeHandler}></ColorChangeInput>
         </ColorInputWrapper>
       </NewLabelInputWrapper>

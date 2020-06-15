@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import LabelsMilestonesTap from '@/components/LabelsMilestonesTap/LabelsMilestonesTap';
 import NewLabel from '@/components/Labels/NewLabel/NewLabel';
+import Header from '@/components/header/Header';
 
 const Wrapper = styled.div`
   margin: auto;
   width: 1000px;
   box-sizing: border-box;
+  margin-top: 25px;
   color: ${({ theme }) => theme.mainFontColor};
 `;
 
@@ -117,6 +119,7 @@ const NewLabelWrapper = styled.div`
 const Labels = () => {
   return (
     <>
+      <Header />
       <Wrapper>
         <ButtonWrapper>
           <LabelsMilestonesTap />
