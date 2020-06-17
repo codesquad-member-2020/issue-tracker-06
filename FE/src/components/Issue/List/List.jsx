@@ -15,7 +15,7 @@ const List = ({ bodyCells }) => {
             </Grid>
             <Grid item xs={7}>
               <IssueTitle>
-                {bodyCell.title}
+                <TitleLink to={`/issueDetail/${bodyCell.id}`}>{bodyCell.title}</TitleLink>
                 {bodyCell.label.length
                   ? bodyCell.label.map((label) => {
                       return (
@@ -115,6 +115,10 @@ const BasicLink = styled(Link)`
   &:hover {
     color: ${({ theme }) => theme.color.darkGray};
   }
+`;
+
+const TitleLink = styled(BasicLink)`
+  margin-left: 0;
 `;
 
 const ImgLink = styled(Link)`
