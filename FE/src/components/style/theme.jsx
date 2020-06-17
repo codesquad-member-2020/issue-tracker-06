@@ -15,7 +15,7 @@ const fontSize = {
   ragular: '16px',
   large: '20px',
   xLarge: '24px',
-  title: '30px'
+  title: '32px'
 };
 
 const color = {
@@ -24,7 +24,8 @@ const color = {
   lightGray: '#cccccc',
   base: '#f7f8fa',
   white: '#ffffff',
-  green: '#32c654'
+  green: '#2cbe4e',
+  red: '#cb2431'
 };
 
 const theme = {

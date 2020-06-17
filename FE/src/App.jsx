@@ -18,6 +18,7 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={Main} />
           <Route path="/issueList" component={Issue} />
+          {/* <Route path="/issueDetail/:issueId" component={IssueDetail} /> */}
           <Route path="/issueDetail" component={IssueDetail} />
           <Route path="/newIssue" component={NewIssue} />
           <Route path="/labels" component={Labels} />
