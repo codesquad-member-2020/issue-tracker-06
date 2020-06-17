@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Wrap from '@/components/Layout/Wrap';
 import Filters from '@/components/Issue/Filters/Filters';
@@ -7,48 +7,53 @@ import ListHead from '@/components/Issue/List/ListHead';
 import List from '@/components/Issue/List/List';
 import NoResultIssuePage from './List/NoResultIssuePage';
 
-const Issue = () => {
-  const bodyCells = [
-    {
-      id: '1',
-      title: '[FE] UI 구현',
-      label: [
-        {
-          title: 'bug',
-          background: 'green',
-          color: '#ffffff'
-        },
-        {
-          title: 'feature',
-          background: 'yellow',
-          color: '#000000'
-        }
-      ],
-      author: 'kiyoesjh',
-      milestone: '[FE] 1주차',
-      assignee: [
-        { id: '@kiyoesjh', url: 'https://avatars1.githubusercontent.com/u/58324414?s=40&v=4' },
-        { id: '@hyewon3938', url: 'https://avatars1.githubusercontent.com/u/58355499?s=40&v=4' }
-      ]
-    },
-    {
-      id: '2',
-      title: '[BE] cors',
-      label: [],
-      author: 'beemiel',
-      milestone: '[BE] 2주차',
-      assignee: [{ id: '@beemiel', url: 'https://avatars1.githubusercontent.com/u/58145890?s=40&v=4' }]
-    }
-  ];
+const bodyCells = [
+  {
+    id: '1',
+    title: '[FE] UI 구현',
+    label: [
+      {
+        title: 'bug',
+        background: 'green',
+        color: '#ffffff'
+      },
+      {
+        title: 'feature',
+        background: 'yellow',
+        color: '#000000'
+      }
+    ],
+    author: 'kiyoesjh',
+    milestone: '[FE] 1주차',
+    assignee: [
+      { id: '@kiyoesjh', url: 'https://avatars1.githubusercontent.com/u/58324414?s=40&v=4' },
+      { id: '@hyewon3938', url: 'https://avatars1.githubusercontent.com/u/58355499?s=40&v=4' }
+    ]
+  },
+  {
+    id: '2',
+    title: '[BE] cors',
+    label: [],
+    author: 'beemiel',
+    milestone: '[BE] 2주차',
+    assignee: [{ id: '@beemiel', url: 'https://avatars1.githubusercontent.com/u/58145890?s=40&v=4' }]
+  }
+];
 
+const Issue = () => {
+  const [selected, setSelected] = useState([]);
   return (
     <div>
       <Header />
       <Wrap>
         <Filters />
         <ListWrap>
-          <ListHead />
-          {bodyCells.length ? <List bodyCells={bodyCells} /> : <NoResultIssuePage />}
+          <ListHead listData={bodyCells} selected={selected} setSelected={setSelected} />
+          {bodyCells.length ? (
+            <List bodyCells={bodyCells} selected={selected} setSelected={setSelected} />
+          ) : (
+            <NoResultIssuePage />
+          )}
         </ListWrap>
       </Wrap>
     </div>
