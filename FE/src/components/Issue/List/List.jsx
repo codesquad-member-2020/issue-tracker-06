@@ -4,14 +4,38 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import EventNoteIcon from '@material-ui/icons/EventNote';
 
-const List = ({ bodyCells }) => {
+const List = ({ bodyCells, selected, setSelected }) => {
+  const isSelected = (id) => selected.indexOf(id) !== -1;
+
+  const handleCheckClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+    }
+
+    setSelected(newSelected);
+  };
+
   return (
     <div>
       {bodyCells.map((bodyCell) => {
         return (
           <ContainerGrid container spacing={4} key={bodyCell.id}>
             <Grid item>
-              <Checkbox size="small" className="check-wrap" />
+              <Checkbox
+                size="small"
+                className="check-wrap"
+                checked={isSelected(bodyCell.id)}
+                onChange={() => handleCheckClick(event, bodyCell.id)}
+              />
             </Grid>
             <Grid item xs={7}>
               <IssueTitle>
