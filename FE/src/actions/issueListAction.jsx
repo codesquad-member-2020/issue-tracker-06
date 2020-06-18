@@ -1,6 +1,12 @@
-export const listCheck = (payload) => {
+export const setFilterQuery = (payload) => {
   return {
-    type: 'listCheck',
+    type: 'setFilterQuery',
     payload
+  };
+};
+
+export const clearFilter = () => {
+  return {
+    type: 'clearFilter'
   };
 };

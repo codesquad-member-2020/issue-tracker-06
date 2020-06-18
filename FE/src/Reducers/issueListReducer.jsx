@@ -1,14 +1,21 @@
 const initialState = {
-  isListChecked: false
+  filterQuery: '',
+  isFiltered: false
 };
 
 const issueListReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'listCheck':
+    case 'setFilterQuery':
       return {
         ...state,
-        isListChecked: action.payload
+        filterQuery: action.payload
       };
+    case 'clearFilter':
+      return {
+        ...state,
+        filterQuery: ''
+      };
+
     default:
       return state;
   }
