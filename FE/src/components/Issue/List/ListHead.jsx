@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Grid, Checkbox, FormControl, Select, MenuItem } from '@material-ui/core';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilterQuery, clearFilter } from '@/actions/issueListAction';
 
 const headCells = [
   { id: 'tHeadAuthor', label: 'Author' },
@@ -9,10 +11,19 @@ const headCells = [
   { id: 'tHeadAssignee', label: 'Assignee' }
 ];
 
+const authorList = [{ value: 'hyewon3938' }, { value: 'kiyoesjh' }, { value: 'beemiel' }];
+const labelList = [{ value: 'BE' }, { value: 'FE' }, { value: 'feature' }];
+const milestoneList = [{ value: '[BE]1주차' }, { value: '[BE]2주차' }, { value: '[FE]1주차' }];
+const assigneeList = [{ value: 'hyewon3938' }, { value: 'kiyoesjh' }, { value: 'beemiel' }];
+
 const ListHead = ({ listData, selected, setSelected }) => {
-  const [filter, setFilter] = useState('is:open');
+  const dispatch = useDispatch();
+  const [filter, setFilter] = useState('is:open ');
   const listDataLength = listData.length;
   const selectedLength = selected.length;
+
+  const [filterList, setFilterList] = useState([]);
+
   const handleChange = (event) => {
     console.log('change');
     setFilter(event.target.value);
@@ -28,6 +39,29 @@ const ListHead = ({ listData, selected, setSelected }) => {
       return setSelected(newSelecteds);
     }
     return setSelected([]);
+  };
+
+  const fetchFilter = (e, filterId) => {
+    switch (filterId) {
+      case 'Author':
+        setFilterList(authorList);
+        break;
+      case 'Label':
+        setFilterList(labelList);
+        break;
+      case 'Milestones':
+        setFilterList(milestoneList);
+        break;
+      case 'Assignee':
+        setFilterList(assigneeList);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const applyFilter = (filter, value) => {
+    dispatch(setFilterQuery({ filter: filter, value: value }));
   };
 
   return (
@@ -49,22 +83,27 @@ const ListHead = ({ listData, selected, setSelected }) => {
         {!selectedLength ? (
           headCells.map((headCell) => {
             return (
-              <GridFilterButton item key={headCell.id} onClick={handleClick}>
+              <GridFilterButton item key={headCell.id}>
                 <FormControlWrap>
                   <Select
                     labelId={headCell.label}
                     id={headCell.id}
                     displayEmpty
                     value={headCell.label}
-                    onChange={handleChange}>
+                    // onChange={handleChange}
+                    onOpen={(e) => fetchFilter(e, headCell.label)}>
                     <MenuItem value={headCell.label} disabled>
                       <em>{headCell.label}</em>
                     </MenuItem>
-                    {/* <MenuItem value="Open issues">Open issues</MenuItem>
-                    <MenuItem value="Your Issues">Your Issues</MenuItem>
-                    <MenuItem value="Everything assigned to you">Everything assigned to you</MenuItem>
-                    <MenuItem value="Everything mentioning you">Everything mentioning you</MenuItem>
-                    <MenuItem value="Close issues">Close issues</MenuItem> */}
+                    {filterList
+                      ? filterList.map((list, index) => {
+                          return (
+                            <MenuItem onClick={() => applyFilter(headCell.label, list.value)} key={index}>
+                              {list.value}
+                            </MenuItem>
+                          );
+                        })
+                      : ''}
                   </Select>
                 </FormControlWrap>
               </GridFilterButton>
