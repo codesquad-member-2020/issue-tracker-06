@@ -5,11 +5,19 @@ import SearchIcon from '@material-ui/icons/Search';
 import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
 import EventNoteOutlinedIcon from '@material-ui/icons/EventNoteOutlined';
 
+import { clearFilter } from '@/actions/issueListAction';
+
+import { useDispatch, useSelector } from 'react-redux';
+
 const Filters = () => {
+  const dispatch = useDispatch();
+
   const [filter, setFilter] = useState('open');
   const [open, setOpen] = useState(false);
+
   const handleChange = (event) => {
     setFilter(event.target.value);
+    dispatch(clearFilter());
   };
 
   const handleClose = () => {
@@ -19,6 +27,9 @@ const Filters = () => {
   const handleOpen = () => {
     setOpen(true);
   };
+
+  const { issueListReducer } = useSelector((state) => state);
+  const { filterQuery } = issueListReducer;
 
   return (
     <BoxWrapStyle display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
@@ -50,7 +61,7 @@ const Filters = () => {
           }
           placeholder="Search all issues"
           inputProps={{ 'aria-label': 'Search all issues' }}
-          value={`is:${filter}`}
+          value={`is:${filter} ${filterQuery}`}
         />
       </FormWrap>
       <ButtonWrapBox display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
@@ -107,12 +118,14 @@ const InputBaseWrap = styled(InputBase)`
 `;
 
 const ButtonWrapBox = styled(Box)`
-  width: 40%;
+  width: 42%;
 `;
 
-const NewIssueButton = styled(Button)`
-  background-color: ${({ theme }) => theme.color.green};
-  color: ${({ theme }) => theme.color.white};
+const NewIssueButton = styled.button`
+  /* background-color: ${({ theme }) => theme.color.green};
+  color: ${({ theme }) => theme.color.white}; */
+  ${({ theme }) => theme.greenButton}
+  width : 100px;
 `;
 
 const CircleFill = styled.span`
