@@ -5,6 +5,7 @@ import LabelsMilestonesTap from '@/components/LabelsMilestonesTap/LabelsMileston
 import MilestoneDetail from '@/components/Milestones/MilestoneDetail/MilestoneDetail';
 import MilestoneInfo from '@/components/Milestones/MilestoneInfo/MilestoneInfo';
 import Header from '@/components/header/Header';
+import { useHistory } from 'react-router-dom';
 
 const Wrapper = styled.div`
   margin: auto;
@@ -61,13 +62,14 @@ const ListItem = styled.div`
 `;
 
 const Milestone = () => {
+  const history = useHistory();
   return (
     <>
       <Header />
       <Wrapper>
         <ButtonWrapper>
           <LabelsMilestonesTap />
-          <NewButton>New milestone</NewButton>
+          <NewButton onClick={() => history.push('/newMilestone')}>New milestone</NewButton>
         </ButtonWrapper>
 
         <List>

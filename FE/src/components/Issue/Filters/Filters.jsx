@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, ButtonGroup, InputBase, InputAdornment, FormControl, Select, MenuItem } from '@material-ui/core';
 import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
@@ -8,15 +8,24 @@ import EventNoteOutlinedIcon from '@material-ui/icons/EventNoteOutlined';
 import { clearFilter } from '@/actions/issueListAction';
 
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const Filters = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
 
-  const [filter, setFilter] = useState('open');
+  const [filter, setFilter] = useState('is:open');
   const [open, setOpen] = useState(false);
 
+  const { issueListReducer } = useSelector((state) => state);
+  const { filterQuery } = issueListReducer;
+
+  const handleInputChange = (event) => {
+    setChangeFilter(event.target.value);
+  };
+
   const handleChange = (event) => {
-    setFilter(event.target.value);
+    setFilter(`is:${event.target.value}`);
     dispatch(clearFilter());
   };
 
@@ -27,9 +36,6 @@ const Filters = () => {
   const handleOpen = () => {
     setOpen(true);
   };
-
-  const { issueListReducer } = useSelector((state) => state);
-  const { filterQuery } = issueListReducer;
 
   return (
     <BoxWrapStyle display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
@@ -61,21 +67,23 @@ const Filters = () => {
           }
           placeholder="Search all issues"
           inputProps={{ 'aria-label': 'Search all issues' }}
-          value={`is:${filter} ${filterQuery}`}
+          value={`${filter} ${filterQuery}`}
         />
       </FormWrap>
       <ButtonWrapBox display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
         <ButtonGroup variant="contained">
-          <Button variant="outlined">
+          <Button variant="outlined" onClick={() => history.push('/labels')}>
             <LocalOfferOutlinedIcon fontSize="small" style={{ marginRight: '5px' }} />
             Labels <CircleFill>{0}</CircleFill>
           </Button>
-          <Button variant="outlined">
+          <Button variant="outlined" onClick={() => history.push('/milestones')}>
             <EventNoteOutlinedIcon fontSize="small" style={{ marginRight: '5px' }} />
             Milestones <CircleFill>{0}</CircleFill>
           </Button>
         </ButtonGroup>
-        <NewIssueButton variant="contained">New issue</NewIssueButton>
+        <NewIssueButton onClick={() => history.push('/newIssue')} variant="contained">
+          New issue
+        </NewIssueButton>
       </ButtonWrapBox>
     </BoxWrapStyle>
   );

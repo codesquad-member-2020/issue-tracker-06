@@ -4,6 +4,8 @@ import Wrap from '@/components/Layout/Wrap';
 import { Grid } from '@material-ui/core';
 import styled from 'styled-components';
 
+import IssueInfo from '@/components/IssueInfo/IssueInfo';
+
 const userInfo = {
   id: '@hyewon3938',
   url: 'https://avatars1.githubusercontent.com/u/58355499?s=40&v=4'
@@ -40,7 +42,7 @@ const NewIssue = () => {
             </FormWrap>
           </GridFromWrap>
           <Grid item xs={3}>
-            사이드메뉴
+            <IssueInfo />
           </Grid>
         </Grid>
       </Wrap>
