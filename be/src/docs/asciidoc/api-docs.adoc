@@ -20,5 +20,7 @@ include::../../../build/generated-snippets/issue-controller-test/get-issue-list/
 milestone의 데이터가 존재하지 않으면 `null`
 
 labels과 assignees의 데이터가 존재하지 않으면 `빈 배열`
+
+유저의 profile_image는 데이터가 없는 경우 `빈 문자열` 로 나옴
 include::../../../build/generated-snippets/issue-controller-test/get-issue-list/http-response.adoc[]
 
