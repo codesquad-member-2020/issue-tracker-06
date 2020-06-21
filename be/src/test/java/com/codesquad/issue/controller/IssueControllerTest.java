@@ -1,32 +1,30 @@
 package com.codesquad.issue.controller;
 
+import com.codesquad.issue.dto.IssueOverviewDTO;
+import com.codesquad.issue.dto.IssueOverviewListDTO;
+import com.codesquad.issue.dto.LabelDTO;
 import com.codesquad.issue.dto.UserDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Description;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(IssueController.class)
@@ -39,98 +37,62 @@ class IssueControllerTest {
     @MockBean
     private IssueController issueController;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Test
-    @Description("모든 회원 가져오기")
-    void getAllUser() throws Exception {
-        List<UserDTO> userDTOS = Arrays.asList(
-                new UserDTO(1L, "ari", "11"),
-                new UserDTO(2L, "joy", "22"),
-                new UserDTO(3L, "lynn", "33")
+    @DisplayName("이슈 DTO 리스트를 반환한다.")
+    void getIssueList() throws Exception {
+
+        List<LabelDTO> labels = Arrays.asList(
+                LabelDTO.builder().labelId(1).title("BE").background("#fcb27e").text("#ffffff").description("백엔드").build()
         );
 
-        when(issueController.getAllUser()).thenReturn(ResponseEntity.ok(userDTOS));
+        List<UserDTO> assignees = Arrays.asList(
+            UserDTO.builder().userId(1L).name("lynn").profileImage("11").build(),
+            UserDTO.builder().userId(2L).name("ari").profileImage("22").build(),
+            UserDTO.builder().userId(3L).name("joy").profileImage("33").build()
+        );
 
-        mockMvc.perform(get("/api/issue"))
+        List<IssueOverviewDTO> issueOverviewDTOS = Arrays.asList(
+                IssueOverviewDTO.builder().issueId(1).title("제목1").isOpen(true).assignees(assignees).created("2020-06-08").labels(labels).milestone("[BE]").writer("lynn").build(),
+                IssueOverviewDTO.builder().issueId(2).title("제목2").isOpen(true).assignees(Collections.EMPTY_LIST).created("2020-06-09").labels(Collections.EMPTY_LIST).milestone(null).writer("ari").build(),
+                IssueOverviewDTO.builder().issueId(3).title("제목3").isOpen(false).assignees(Collections.EMPTY_LIST).created("2020-06-10").labels(Collections.EMPTY_LIST).milestone(null).writer("joy").build()
+        );
+
+        IssueOverviewListDTO issueOverviewListDTO = IssueOverviewListDTO.builder()
+                                                                        .numberOfIssue(1)
+                                                                        .numberOfLabel(2)
+                                                                        .numberOfMilestone(3)
+                                                                        .overviews(issueOverviewDTOS).build();
+
+        MultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
+        requestParams.add("is_open", "");
+        requestParams.add("assignee", "");
+        requestParams.add("label", "");
+        requestParams.add("author", "");
+        requestParams.add("milestone", "");
+
+        when(issueController.getIssues("", "", "", "", "")).thenReturn(ResponseEntity.ok().body(issueOverviewListDTO));
+
+        mockMvc.perform(get("/api/issues")
+                        .params(requestParams))
                 .andExpect(status().isOk())
-                .andDo(document("{class-name}/{method-name}",
-                        preprocessRequest(modifyUris()
-                                .host("13.209.210.21")
-                                .port(8080),
-                                prettyPrint()),
-                        preprocessResponse(prettyPrint()),
-                        responseFields(
-                                fieldWithPath("[].id").description("회원의 id").type(Long.class),
-                                fieldWithPath("[].name").description("Member's name"),
-                                fieldWithPath("[].profile_image").description("Member's age")
-                        )
-                ));
-    }
-
-    @Test
-    @Description("회원 하나 가져오기")
-    void getUser() throws Exception {
-        UserDTO userDTO = UserDTO.builder().id(1L)
-                .name("TEST")
-                .profileImage("1234")
-                .build();
-
-        when(issueController.getUser(any())).thenReturn(ResponseEntity.status(HttpStatus.OK).body(userDTO));
-
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/issue/{id}", userDTO.getId()))
-                .andExpect(status().isOk())
-                .andDo(document("{class-name}/{method-name}",
-                        preprocessRequest(modifyUris()
-                                        .host("13.209.210.21")
-                                        .port(8080),
-                                prettyPrint()),
-                        preprocessResponse(prettyPrint()),
-                        pathParameters(
-                                parameterWithName("id").description("회원 id")
-                        ),
-                        responseFields(
-                                fieldWithPath("id").description("회원 id").type(Long.class),
-                                fieldWithPath("name").description("회원 이름"),
-                                fieldWithPath("profile_image").description("회원 이미지")
-                        )
-                ));
-    }
-
-    @Test
-    @Description("회원 등록")
-    void addUser() throws Exception {
-        UserDTO newUserDTO = UserDTO.builder().id(1L)
-                .name("lynn")
-                .profileImage("image")
-                .build();
-
-        when(issueController.addUser(any())).thenReturn(ResponseEntity.ok().body(newUserDTO));
-
-        mockMvc.perform(post("/api/issue")
-                    .content(objectMapper.writeValueAsString(newUserDTO))
-                    .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().json("{\"id\": 1, \"name\": \"lynn\"}"))
-                .andExpect(content().json("{\"id\": 1, \"name\": \"lynn\", \"profile_image\": \"image\"}"))
-                .andExpect(jsonPath("$.name", is("lynn")))
+                .andExpect(jsonPath("number_of_label", is(2)))
+                .andExpect(jsonPath("overviews[0].milestone", is("[BE]")))
+                .andExpect(jsonPath("overviews[0].issue_id", is(1)))
+                .andExpect(jsonPath("overviews[0].title", is("제목1")))
+                .andExpect(jsonPath("overviews[0].is_open", is(true)))
+                .andExpect(jsonPath("overviews[0].assignees[0].user_id", is(1)))
+                .andExpect(jsonPath("overviews[0].assignees[0].name", is("lynn")))
+                .andExpect(jsonPath("overviews[0].labels[0].background", is("#fcb27e")))
                 .andDo(document(
                         "{class-name}/{method-name}",
-                        preprocessRequest(modifyUris()
-                                        .host("13.209.210.21")
-                                        .port(8080),
-                                prettyPrint()),
+                        preprocessRequest(modifyUris().host("13.209.210.21").port(8080),prettyPrint()),
                         preprocessResponse(prettyPrint()),
-                        responseFields(
-                                fieldWithPath("id").description("회원 id").type(Long.class),
-                                fieldWithPath("name").description("회원 이름"),
-                                fieldWithPath("profile_image").description("회원 이미지")
-                        ),
-                        requestFields(
-                                fieldWithPath("id").description("회원 id").type(Long.class),
-                                fieldWithPath("name").description("회원 이름"),
-                                fieldWithPath("profile_image").description("회원 이미지")
+                        requestParameters(
+                                parameterWithName("is_open").description("open 여부"),
+                                parameterWithName("assignee").description("assignee 이름"),
+                                parameterWithName("label").description("label 이름"),
+                                parameterWithName("author").description("author 이름"),
+                                parameterWithName("milestone").description("milestone 이름")
                         )
                 ));
     }

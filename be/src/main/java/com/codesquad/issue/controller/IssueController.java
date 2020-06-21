@@ -1,29 +1,28 @@
 package com.codesquad.issue.controller;
 
-import com.codesquad.issue.dto.UserDTO;
-import org.springframework.http.HttpStatus;
+import com.codesquad.issue.application.IssueService;
+import com.codesquad.issue.dto.IssueOverviewListDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/issue")
+@RequestMapping("/api/issues")
 public class IssueController {
 
-    @GetMapping()
-    public ResponseEntity<List<UserDTO>> getAllUser() {
-        return ResponseEntity.ok(null);
+    private IssueService issueService;
+
+    public IssueController(IssueService issueService) {
+        this.issueService = issueService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-        return ResponseEntity.ok(null);
-    }
-
-    @PostMapping("")
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    @GetMapping
+    public ResponseEntity<IssueOverviewListDTO> getIssues(@RequestParam(required = false, name = "is_open", defaultValue = "")String isOpen,
+                                                          @RequestParam(required = false, name = "assignee", defaultValue = "")String assignee,
+                                                          @RequestParam(required = false, name = "label", defaultValue = "")String label,
+                                                          @RequestParam(required = false, name = "author", defaultValue = "")String author,
+                                                          @RequestParam(required = false, name = "milestone", defaultValue = "") String milestone) {
+        return ResponseEntity.ok().body(issueService.getIssueOverviewListDTO(isOpen, assignee, label, author, milestone));
     }
 
 }

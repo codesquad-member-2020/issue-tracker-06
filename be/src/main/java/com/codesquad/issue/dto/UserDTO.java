@@ -8,9 +8,12 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class UserDTO {
 
-    private Long id;
+    @JsonProperty(value = "user_id")
+    private Long userId;
+
     private String name;
 
     @JsonProperty(value = "profile_image")
