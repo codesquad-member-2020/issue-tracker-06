@@ -1,6 +1,9 @@
 drop table if exists issue_label;
 drop table if exists comment;
 drop table if exists assignee;
+drop table if exists image;
+drop table if exists issue_emoji;
+drop table if exists comment_emoji;
 drop table if exists issue;
 drop table if exists label;
 drop table if exists milestone;
@@ -33,13 +36,31 @@ create table issue (
     issue_id int primary key auto_increment,
     title varchar (255),
     content text,
-    emoji varchar (255),
     is_open boolean,
     created_at datetime,
-    image varchar (255),
     writer int references user(user_id),
     milestone int references milestone(milestone_id)
 );
+
+create table image (
+    image_id int primary key auto_increment,
+    url varchar (255),
+    issue int references issue(issue_id)
+);
+
+create table issue_emoji (
+    issue_emoji_id int primary key auto_increment,
+    emoji varchar (255),
+    issue int references issue(issue_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
+
+
+create table comment_emoji (
+    comment_emoji_id int primary key auto_increment,
+    emoji varchar (255),
+    comment int references comment(comment_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_general_ci;
+
 
 create table issue_label (
     issue_label_id int primary key auto_increment,
@@ -56,7 +77,6 @@ create table assignee (
 create table comment (
     comment_id int primary key auto_increment,
     content text,
-    emoji varchar (255),
     created_at datetime,
     issue int references issue(issue_id),
     writer int references user(user_id)
