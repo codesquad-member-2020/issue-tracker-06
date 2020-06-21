@@ -1,52 +1,24 @@
 = Issue API Docs
 Lynn [qnswwrn@gmail.com]
-1.0.0, 09/06/2020
+1.0.0, 21/06/2020
 :toc: left
 :sectnums:
 
 
-== GET 모든 회원
-모든 회원을 가져온다.
+== GET 이슈 리스트
+필터로 이슈 리스트를 가져온다.
+
+requestParameters는 `Optional` 이므로 넣지 않아도 됨
 
 === HTTP Request
-include::../../../build/generated-snippets/issue-controller-test/get-all-user/http-request.adoc[]
+include::../../../build/generated-snippets/issue-controller-test/get-issue-list/http-request.adoc[]
+
+=== Request Params
+include::../../../build/generated-snippets/issue-controller-test/get-issue-list/request-parameters.adoc[]
 
 === HTTP Response
-include::../../../build/generated-snippets/issue-controller-test/get-all-user/http-response.adoc[]
+milestone의 데이터가 존재하지 않으면 `null`
 
-=== Response Fields
-include::../../../build/generated-snippets/issue-controller-test/get-all-user/response-fields.adoc[]
-
-
-== GET 특정 회원
-특정 id에 해당하는 회원을 가져온다.
-
-=== HTTP Request
-include::../../../build/generated-snippets/issue-controller-test/get-user/http-request.adoc[]
-
-=== Path-parameters
-include::../../../build/generated-snippets/issue-controller-test/get-user/path-parameters.adoc[]
-
-=== HTTP Response
-include::../../../build/generated-snippets/issue-controller-test/get-user/http-response.adoc[]
-
-=== Response Fields
-include::../../../build/generated-snippets/issue-controller-test/get-user/response-fields.adoc[]
-
-
-== POST 회원 등록
-회원을 등록 한다.
-
-=== HTTP Request
-include::../../../build/generated-snippets/issue-controller-test/add-user/http-request.adoc[]
-
-=== Request Fields
-include::../../../build/generated-snippets/issue-controller-test/add-user/request-fields.adoc[]
-
-=== HTTP Response
-include::../../../build/generated-snippets/issue-controller-test/add-user/http-response.adoc[]
-
-=== Response Fields
-include::../../../build/generated-snippets/issue-controller-test/add-user/response-fields.adoc[]
-
+labels과 assignees의 데이터가 존재하지 않으면 `빈 배열`
+include::../../../build/generated-snippets/issue-controller-test/get-issue-list/http-response.adoc[]
 
