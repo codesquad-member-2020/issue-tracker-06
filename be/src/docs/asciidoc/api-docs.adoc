@@ -26,3 +26,17 @@ labels과 assignees의 데이터가 존재하지 않으면 `빈 배열`
 유저의 profile_image는 데이터가 없는 경우 `빈 문자열` 로 나옴
 include::../../../build/generated-snippets/issue-controller-test/get-issue-list/http-response.adoc[]
 
+== POST 이슈
+이슈를 작성한다.
+
+=== HTTP Request
+- issueUUID 필드는 서버에서 생성하므로 무시해주세요.. 어떻게 빼야하는지 모르겠어요....😥😥
+- milestone은 없으면 아예 빼주세요. 안되면 말씀해주세요. 의논해보아요.
+- assignees 와 labels는 선택하지 않았을 경우 null과 빈배열 모두 가능해요.
+include::../../../build/generated-snippets/issue-controller-test/add-issue/http-request.adoc[]
+
+=== Request Fields
+include::../../../build/generated-snippets/issue-controller-test/add-issue/request-fields.adoc[]
+
+=== HTTP Response
+include::../../../build/generated-snippets/issue-controller-test/add-issue/http-response.adoc[]
