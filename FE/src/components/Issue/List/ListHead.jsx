@@ -19,7 +19,7 @@ const assigneeList = [{ value: 'hyewon3938' }, { value: 'kiyoesjh' }, { value: '
 const ListHead = ({ listData, selected, setSelected }) => {
   const dispatch = useDispatch();
   const [filter, setFilter] = useState('is:open ');
-  const listDataLength = listData.length;
+  const listDataLength = !listData ? '' : listData.length;
   const selectedLength = selected.length;
 
   const [filterList, setFilterList] = useState([]);

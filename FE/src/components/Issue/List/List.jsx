@@ -24,26 +24,28 @@ const List = ({ bodyCells, selected, setSelected }) => {
     setSelected(newSelected);
   };
 
-  return (
+  return !bodyCells ? (
+    ''
+  ) : (
     <div>
-      {bodyCells.map((bodyCell) => {
+      {bodyCells.map((bodyCell, index) => {
         return (
-          <ContainerGrid container spacing={4} key={bodyCell.id}>
+          <ContainerGrid container spacing={4} key={bodyCell.issue_id}>
             <Grid item>
               <Checkbox
                 size="small"
                 className="check-wrap"
-                checked={isSelected(bodyCell.id)}
-                onChange={() => handleCheckClick(event, bodyCell.id)}
+                checked={isSelected(bodyCell.issue_id)}
+                onChange={() => handleCheckClick(event, bodyCell.issue_id)}
               />
             </Grid>
             <Grid item xs={7}>
               <IssueTitle>
-                <TitleLink to={`/issueDetail/${bodyCell.id}`}>{bodyCell.title}</TitleLink>
-                {bodyCell.label.length
-                  ? bodyCell.label.map((label) => {
+                <TitleLink to={`/issueDetail/${bodyCell.issue_id}`}>{bodyCell.title}</TitleLink>
+                {bodyCell.labels.length
+                  ? bodyCell.labels.map((label) => {
                       return (
-                        <LabelWrap key={label.background} background={label.background} color={label.color}>
+                        <LabelWrap key={label.label_id} background={label.background} color={label.text}>
                           {label.title}
                         </LabelWrap>
                       );
@@ -52,7 +54,7 @@ const List = ({ bodyCells, selected, setSelected }) => {
               </IssueTitle>
               <IssueDetailWrap>
                 <span>
-                  #{bodyCell.id} opened yesterday by <BasicLink to={'/'}>{bodyCell.author}</BasicLink>
+                  #{bodyCell.issue_id} opened yesterday by <BasicLink to={'/'}>{bodyCell.writer}</BasicLink>
                 </span>
                 <BasicLink to={'/'}>
                   <EventNoteIcon style={{ fontSize: 15, verticalAlign: 'middle' }} />
@@ -62,10 +64,10 @@ const List = ({ bodyCells, selected, setSelected }) => {
             </Grid>
             <GridImgWrap item xs>
               <UserImgWrap>
-                {bodyCell.assignee.map((assignee) => {
+                {bodyCell.assignees.map((assignee, index) => {
                   return (
-                    <ImgLink to={'/'} key={assignee.url}>
-                      <img src={assignee.url} />
+                    <ImgLink to={'/'} key={index}>
+                      <img src={assignee.profile_image} />
                     </ImgLink>
                   );
                 })}
@@ -143,6 +145,7 @@ const BasicLink = styled(Link)`
 
 const TitleLink = styled(BasicLink)`
   margin-left: 0;
+  color: ${({ theme }) => theme.color.darkGray};
 `;
 
 const ImgLink = styled(Link)`

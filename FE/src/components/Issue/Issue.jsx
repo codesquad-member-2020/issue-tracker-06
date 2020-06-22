@@ -44,8 +44,8 @@ import { getIssueList } from '@/actions/issueListAction';
 
 const Issue = () => {
   const [selected, setSelected] = useState([]);
-  const { issueList } = useSelector((state) => state.issueListReducer);
   const dispatch = useDispatch();
+  const { issueList } = useSelector((state) => state.issueListReducer);
   console.log(issueList);
   useEffect(() => {
     dispatch(getIssueList());
@@ -58,11 +58,7 @@ const Issue = () => {
         <Filters />
         <ListWrap>
           <ListHead listData={issueList.overviews} selected={selected} setSelected={setSelected} />
-          {issueList.overviews.length ? (
-            <List bodyCells={issueList.overviews} selected={selected} setSelected={setSelected} />
-          ) : (
-            <NoResultIssuePage />
-          )}
+          <List bodyCells={issueList.overviews} selected={selected} setSelected={setSelected} />
         </ListWrap>
       </Wrap>
     </div>
