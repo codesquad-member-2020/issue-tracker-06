@@ -4,6 +4,7 @@ import com.codesquad.issue.application.LoginService;
 import com.codesquad.issue.domain.GithubProperties;
 import com.codesquad.issue.domain.User;
 import com.codesquad.issue.util.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/login")
 public class LoginController {
 
@@ -43,6 +45,7 @@ public class LoginController {
 
         loginService.addUser(user);
         String jwt = JwtUtil.buildJwtToken(user);
+        log.info("jwt : {}", jwt);
 
         List<Cookie> cookies = Arrays.asList(
                 new Cookie("jwt", jwt),
@@ -59,3 +62,4 @@ public class LoginController {
     }
 
 }
+
