@@ -1,6 +1,12 @@
 const initialState = {
   filterQuery: '',
-  isFiltered: false
+  isOpen: true,
+  Assignee: '',
+  Label: '',
+  Author: '',
+  Milestone: '',
+  isFiltered: false,
+  issueList: []
 };
 
 const issueListReducer = (state = initialState, action) => {
@@ -15,7 +21,40 @@ const issueListReducer = (state = initialState, action) => {
         ...state,
         filterQuery: ''
       };
-
+    case 'setIsOpen':
+      return {
+        ...state,
+        isOpen: action.payload
+      };
+    case 'setAssignee':
+      return {
+        ...state,
+        Assignee: action.payload
+      };
+    case 'setLabel':
+      return {
+        ...state,
+        Label: action.payload
+      };
+    case 'setAuthor':
+      return {
+        ...state,
+        Author: action.payload
+      };
+    case 'setMilestone':
+      return {
+        ...state,
+        Milestone: action.payload
+      };
+    case 'setIssueList':
+      return {
+        ...state,
+        issueList: action.payload
+      };
+    case 'getIssueList':
+      return {
+        ...state
+      };
     default:
       return state;
   }
