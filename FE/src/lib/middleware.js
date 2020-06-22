@@ -1,4 +1,5 @@
 import { setFilterQuery, clearFilter } from '@/actions/issueListAction';
+import { addIssueInfo } from '@/actions/issueInfoAction';
 
 const loggerMiddleware = (store) => (next) => (action) => {
   console.log('now : ', store.getState());
@@ -11,6 +12,7 @@ const loggerMiddleware = (store) => (next) => (action) => {
 
 const filterQueryMiddleware = (store) => (dispatch) => (action) => {
   if (action.type === 'clearFilter') return dispatch(clearFilter());
+  if (action.type === 'addIssueInfo') return dispatch(addIssueInfo(action.modal, action.payload));
 
   const { filter, value } = action.payload;
 
