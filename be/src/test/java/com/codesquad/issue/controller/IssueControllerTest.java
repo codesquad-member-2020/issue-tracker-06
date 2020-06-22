@@ -1,9 +1,7 @@
 package com.codesquad.issue.controller;
 
-import com.codesquad.issue.dto.IssueOverviewDTO;
-import com.codesquad.issue.dto.IssueOverviewListDTO;
-import com.codesquad.issue.dto.LabelDTO;
-import com.codesquad.issue.dto.UserDTO;
+import com.codesquad.issue.domain.JwtProperties;
+import com.codesquad.issue.dto.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +43,26 @@ class IssueControllerTest {
                 LabelDTO.builder().labelId(1).title("BE").background("#fcb27e").text("#ffffff").description("백엔드").build()
         );
 
-        List<UserDTO> assignees = Arrays.asList(
+        List<LabelDTO> allLabel = Arrays.asList(
+                LabelDTO.builder().labelId(1).title("BE").background("#fcb27e").text("#ffffff").description("백엔드").build(),
+                LabelDTO.builder().labelId(1).title("FE").background("#0a2f6b").text("#ffffff").description("프론트엔드").build(),
+                LabelDTO.builder().labelId(1).title("scrum").background("#68ff36").text("#ffffff").description("스크럼").build()
+        );
+
+        List<MilestoneDTO> milestones = Arrays.asList(
+                MilestoneDTO.builder().milestoneId(1).title("[BE] 1주차").description("1주차").due_by("2020-06-05").build(),
+                MilestoneDTO.builder().milestoneId(2).title("[BE] 2주차").description("2주차").due_by("2020-06-12").build(),
+                MilestoneDTO.builder().milestoneId(3).title("[FE] 1주차").description("1주차").due_by("2020-06-06").build()
+        );
+
+        List<UserDTO> users = Arrays.asList(
             UserDTO.builder().userId(1L).name("lynn").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build(),
             UserDTO.builder().userId(2L).name("ari").profileImage("").build(),
             UserDTO.builder().userId(3L).name("joy").profileImage("").build()
         );
 
         List<IssueOverviewDTO> issueOverviewDTOS = Arrays.asList(
-                IssueOverviewDTO.builder().issueId(1).title("제목1").isOpen(true).assignees(assignees).created("2020-06-08").labels(labels).milestone("[BE]").writer("lynn").build(),
+                IssueOverviewDTO.builder().issueId(1).title("제목1").isOpen(true).assignees(users).created("2020-06-08").labels(labels).milestone("[BE]").writer("lynn").build(),
                 IssueOverviewDTO.builder().issueId(2).title("제목2").isOpen(true).assignees(Collections.EMPTY_LIST).created("2020-06-09").labels(Collections.EMPTY_LIST).milestone(null).writer("ari").build(),
                 IssueOverviewDTO.builder().issueId(3).title("제목3").isOpen(false).assignees(Collections.EMPTY_LIST).created("2020-06-10").labels(Collections.EMPTY_LIST).milestone(null).writer("joy").build()
         );
@@ -61,6 +71,10 @@ class IssueControllerTest {
                                                                         .numberOfIssue(1)
                                                                         .numberOfLabel(2)
                                                                         .numberOfMilestone(3)
+                                                                        .author(users)
+                                                                        .label(allLabel)
+                                                                        .milestones(milestones)
+                                                                        .assignee(users)
                                                                         .overviews(issueOverviewDTOS).build();
 
         MultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
@@ -73,7 +87,8 @@ class IssueControllerTest {
         when(issueController.getIssues("", "", "", "", "")).thenReturn(ResponseEntity.ok().body(issueOverviewListDTO));
 
         mockMvc.perform(get("/api/issues")
-                        .params(requestParams))
+                        .params(requestParams)
+                        .header(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + "jwtToken"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("number_of_label", is(2)))
                 .andExpect(jsonPath("overviews[0].milestone", is("[BE]")))

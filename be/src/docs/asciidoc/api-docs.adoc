@@ -10,6 +10,8 @@ Lynn [qnswwrn@gmail.com]
 
 requestParameters는 `Optional` 이므로 넣지 않아도 됨
 
+Authorzation 헤더의 jwtToken에는 cookie에 담긴 jwt값이 들어가면 됨
+
 === HTTP Request
 include::../../../build/generated-snippets/issue-controller-test/get-issue-list/http-request.adoc[]
 
