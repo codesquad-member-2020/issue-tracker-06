@@ -2,16 +2,32 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import { useHistory } from 'react-router-dom';
+
+const mockData = {
+  title: '[FE] UI 만들기'
+};
 
 const IssueDetailHeader = ({ id }) => {
   const isOpen = false;
   const [titleEdit, setTitleEdit] = useState(false);
+  const [changeTitle, setChangeTit] = useState(mockData.title);
+  const history = useHistory();
+
+  const handleChange = (e) => {
+    setChangeTit(e.target.value);
+  };
 
   const handleEdit = () => {
     setTitleEdit(true);
   };
 
   const handleCandel = () => {
+    setChangeTit(mockData.title);
+    setTitleEdit(false);
+  };
+
+  const handleSaveTitle = () => {
     setTitleEdit(false);
   };
 
@@ -22,9 +38,9 @@ const IssueDetailHeader = ({ id }) => {
           <div>
             <form>
               <TitleWrap>
-                <TitleEditInput value={'[FE] UI 만들기'} type="text" />
+                <TitleEditInput value={changeTitle} onChange={handleChange} type="text" />
                 <div>
-                  <SaveButton>Save</SaveButton>
+                  <SaveButton onClick={handleSaveTitle}>Save</SaveButton>
                   <CancelButton onClick={handleCandel}>Cancel</CancelButton>
                 </div>
               </TitleWrap>
@@ -33,11 +49,11 @@ const IssueDetailHeader = ({ id }) => {
         ) : (
           <TitleWrap>
             <Title>
-              [FE] UI 만들기 <span>#{id}</span>
+              {changeTitle} <span>#{id}</span>
             </Title>
             <div>
               <EditButton onClick={handleEdit}>Edit</EditButton>
-              <NewIssueButton>New issue</NewIssueButton>
+              <NewIssueButton onClick={() => history.push('/newIssue')}>New issue</NewIssueButton>
             </div>
           </TitleWrap>
         )}
