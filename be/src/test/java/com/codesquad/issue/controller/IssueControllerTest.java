@@ -46,9 +46,9 @@ class IssueControllerTest {
         );
 
         List<UserDTO> assignees = Arrays.asList(
-            UserDTO.builder().userId(1L).name("lynn").profileImage("11").build(),
-            UserDTO.builder().userId(2L).name("ari").profileImage("22").build(),
-            UserDTO.builder().userId(3L).name("joy").profileImage("33").build()
+            UserDTO.builder().userId(1L).name("lynn").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build(),
+            UserDTO.builder().userId(2L).name("ari").profileImage("").build(),
+            UserDTO.builder().userId(3L).name("joy").profileImage("").build()
         );
 
         List<IssueOverviewDTO> issueOverviewDTOS = Arrays.asList(

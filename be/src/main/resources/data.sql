@@ -1,10 +1,10 @@
 use issue;
 
 INSERT INTO user (name, password, profile_image)
-VALUES ('lynn', 'lynn', 'image'),
-       ('ari', 'ari', 'image'),
-       ('joy', 'joy', 'image'),
-       ('ari_joy', 'ari_joy', 'image');
+VALUES ('lynn', 'lynn', 'https://avatars0.githubusercontent.com/u/58145890?v=4'),
+       ('ari', 'ari', ''),
+       ('joy', 'joy', ''),
+       ('ari_joy', 'ari_joy', '');
 
 INSERT INTO label (title, background_color, text_color, description)
 VALUES ('BE', '#fcb27e', '#ffffff', '백엔드'),
