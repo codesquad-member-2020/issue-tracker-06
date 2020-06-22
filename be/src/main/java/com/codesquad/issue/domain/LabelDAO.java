@@ -65,4 +65,9 @@ public class LabelDAO {
     public int getLabelCount() {
         return jdbcTemplate.queryForObject("SELECT count(label_id) FROM label", Integer.class);
     }
+
+    public void addIssueLabel(Integer labelId, Integer issueId) {
+        String sql = "INSERT INTO issue_label (issue, label) VALUES (?, ?)";
+        jdbcTemplate.update(sql, issueId, labelId);
+    }
 }

@@ -62,4 +62,9 @@ public class UserDAO {
             }
         });
     }
+
+    public void addAssignees(Integer userId, Integer issueId) {
+        String sql = "INSERT INTO assignee (issue, user) VALUES (?, ?)";
+        jdbcTemplate.update(sql, issueId, userId);
+    }
 }
