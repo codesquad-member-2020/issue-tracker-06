@@ -4,7 +4,6 @@ import com.codesquad.issue.application.LoginService;
 import com.codesquad.issue.domain.GithubProperties;
 import com.codesquad.issue.domain.User;
 import com.codesquad.issue.util.JwtUtil;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
