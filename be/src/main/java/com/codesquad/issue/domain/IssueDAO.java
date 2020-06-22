@@ -1,8 +1,6 @@
 package com.codesquad.issue.domain;
 
 import com.codesquad.issue.dto.IssueOverviewDTO;
-import com.codesquad.issue.dto.LabelDTO;
-import com.codesquad.issue.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,12 +18,20 @@ import java.util.List;
 @Repository
 @Slf4j
 public class IssueDAO {
+
     private JdbcTemplate jdbcTemplate;
+
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public IssueDAO(DataSource dataSource) {
+    private LabelDAO labelDAO;
+
+    private UserDAO userDAO;
+
+    public IssueDAO(DataSource dataSource, LabelDAO labelDAO, UserDAO userDAO) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
         this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
+        this.labelDAO = labelDAO;
+        this.userDAO = userDAO;
     }
 
     public List<IssueOverviewDTO> getIssuesWithFilter(String is_open, String assignee, String label, String author, String milestone) {
@@ -78,59 +84,11 @@ public class IssueDAO {
                                         .created(rs.getTimestamp("created_at").toLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                                         .writer(rs.getString("writer"))
                                         .milestone(rs.getString("milestone"))
-                                        .labels(getLabels(rs.getInt("issue_id")))
-                                        .assignees(getAssignees(rs.getInt("issue_id")))
+                                        .labels(labelDAO.getLabels(rs.getInt("issue_id")))
+                                        .assignees(userDAO.getAssignees(rs.getInt("issue_id")))
                                         .build();
             }
         });
-    }
-
-    public List<LabelDTO> getLabels(Integer issue_id) {
-        String sql = "SELECT l.label_id, title, background_color, text_color, description " +
-                    "FROM issue_label il " +
-                    "JOIN label l " +
-                    "ON il.label = l.label_id " +
-                    "WHERE il.issue = :issue_id";
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("issue_id", issue_id);
-        return namedParameterJdbcTemplate.query(sql, sqlParameterSource, new RowMapper<LabelDTO>() {
-            @Override
-            public LabelDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return LabelDTO.builder()
-                        .labelId(rs.getInt("label_id"))
-                        .title(rs.getString("title"))
-                        .background(rs.getString("background_color"))
-                        .text(rs.getString("text_color"))
-                        .description(rs.getString("description"))
-                        .build();
-            }
-        });
-    }
-
-    public List<UserDTO> getAssignees(Integer issue_id) {
-        String sql = "SELECT u.user_id, u.name, u.profile_image " +
-                    "FROM assignee a " +
-                    "JOIN user u " +
-                    "ON a.user = u.user_id " +
-                    "WHERE a.issue = :issue_id";
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource("issue_id", issue_id);
-        return namedParameterJdbcTemplate.query(sql, sqlParameterSource, new RowMapper<UserDTO>() {
-            @Override
-            public UserDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-                return UserDTO.builder()
-                        .userId(rs.getLong("user_id"))
-                        .name(rs.getString("name"))
-                        .profileImage(rs.getString("profile_image"))
-                        .build();
-            }
-        });
-    }
-
-    public int getLabelCount() {
-        return jdbcTemplate.queryForObject("SELECT count(label_id) FROM label", Integer.class);
-    }
-
-    public int getMilestoneCount() {
-        return jdbcTemplate.queryForObject("SELECT count(milestone_id) FROM milestone", Integer.class);
     }
 
     public int getIssueCount() {
