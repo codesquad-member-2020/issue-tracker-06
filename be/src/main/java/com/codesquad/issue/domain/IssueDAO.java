@@ -95,4 +95,13 @@ public class IssueDAO {
         return jdbcTemplate.queryForObject("SELECT count(issue_id) FROM issue", Integer.class);
     }
 
+    public void addIssue(RequestIssue issue) {
+        String sql = "INSERT INTO issue (issue_uuid, title, content, writer, milestone) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, issue.getIssueUUID(), issue.getTitle(), issue.getContent(), issue.getWriter(), issue.getMilestone());
+    }
+
+    public Integer getIssueWithUUID(String issueUUID) {
+        String sql = "SELECT issue_id FROM issue WHERE issue_uuid = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[] {issueUUID}, Integer.class);
+    }
 }

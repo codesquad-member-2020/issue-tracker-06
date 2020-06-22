@@ -1,9 +1,12 @@
 package com.codesquad.issue.controller;
 
 import com.codesquad.issue.application.IssueService;
+import com.codesquad.issue.domain.RequestIssue;
 import com.codesquad.issue.dto.IssueOverviewListDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
 
 
 @RestController
@@ -23,6 +26,12 @@ public class IssueController {
                                                           @RequestParam(required = false, name = "author", defaultValue = "")String author,
                                                           @RequestParam(required = false, name = "milestone", defaultValue = "") String milestone) {
         return ResponseEntity.ok().body(issueService.getIssueOverviewListDTO(isOpen, assignee, label, author, milestone));
+    }
+
+    @PostMapping
+    public  ResponseEntity<String> addIssue(@RequestBody RequestIssue issue) {
+        issueService.addIssue(issue);
+        return ResponseEntity.ok().body("성공");
     }
 
 }
