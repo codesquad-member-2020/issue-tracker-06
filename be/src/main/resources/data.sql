@@ -18,16 +18,16 @@ VALUES ('[BE] 1주차', '2020-06-05', '1주차'),
        ('[BE] 2주차', '2020-06-12', '2주차'),
        ('[FE] 1주차', '2020-06-06', '1주차');
 
-INSERT INTO issue (title, content, is_open, created_at, writer, milestone)
-VALUES ('[BE] 프로젝트 세팅', '내용 내용', true, '2020-06-03T14:25:10', 1, 1),
-       ('[FE] UI', 'FE 내용 내용', true, '2020-06-02T15:25:10', 2, 3);
+INSERT INTO issue (issue_uuid ,title, content, is_open, created_at, writer, milestone)
+VALUES ('uuid1', '[BE] 프로젝트 세팅', '내용 내용', true, '2020-06-03T14:25:10', 1, 1),
+       ('uuid2', '[FE] UI', 'FE 내용 내용', true, '2020-06-02T15:25:10', 2, 3);
 
-INSERT INTO issue (title, content, is_open, created_at, writer)
-VALUES ('[BE] DB 설계', 'DB 설계하기', true, '2020-06-07T05:25:10', 1),
-       ('[BE] cors', 'cors', false, '2020-06-08T05:25:10', 1),
-       ('[TEAM] 101010 scrum', 'cors', true, '2020-06-08T05:25:10', 3),
-       ('[FE] 리액트', '리액트', true, '2020-06-08T05:25:10', 2),
-       ('[기타] 테스트', '라벨라벨', true, '2020-06-08T07:25:10', 1);
+INSERT INTO issue (issue_uuid, title, content, is_open, created_at, writer)
+VALUES ('uuid3', '[BE] DB 설계', 'DB 설계하기', true, '2020-06-07T05:25:10', 1),
+       ('uuid4', '[BE] cors', 'cors', false, '2020-06-08T05:25:10', 1),
+       ('uuid5', '[TEAM] 101010 scrum', 'cors', true, '2020-06-08T05:25:10', 3),
+       ('uuid6', '[FE] 리액트', '리액트', true, '2020-06-08T05:25:10', 2),
+       ('uuid7', '[기타] 테스트', '라벨라벨', true, '2020-06-08T07:25:10', 1);
 
 INSERT INTO comment (content, created_at, issue, writer)
 VALUES ('뭐야 이거', '2020-06-04T14:25:10', 1, 1),

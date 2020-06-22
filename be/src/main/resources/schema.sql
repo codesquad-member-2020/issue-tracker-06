@@ -34,10 +34,11 @@ create table user (
 
 create table issue (
     issue_id int primary key auto_increment,
+    issue_uuid varchar (255),
     title varchar (255),
     content text,
-    is_open boolean,
-    created_at datetime,
+    is_open boolean default true ,
+    created_at datetime default CURRENT_TIMESTAMP,
     writer int references user(user_id),
     milestone int references milestone(milestone_id)
 );
