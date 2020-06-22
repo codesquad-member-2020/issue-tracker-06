@@ -41,7 +41,7 @@ const NewIssue = () => {
               </CommentWrap>
             </FormWrap>
           </GridFromWrap>
-          <Grid item xs={3}>
+          <Grid item xs={2}>
             <IssueInfo />
           </Grid>
         </Grid>

@@ -22,10 +22,13 @@ const color = {
   darkGray: '#444444',
   gray: '#999999',
   lightGray: '#cccccc',
+  lightestGray: '#f6f8fa',
   base: '#f7f8fa',
   white: '#ffffff',
   green: '#2cbe4e',
-  red: '#cb2431'
+  red: '#cb2431',
+  lightBlue: '#f1f8ff',
+  lightBlueBorder: '#c0d3eb'
 };
 
 const theme = {
