@@ -1,6 +1,5 @@
 package com.codesquad.issue.application;
 
-import com.codesquad.issue.domain.Issue;
 import com.codesquad.issue.domain.IssueDAO;
 import com.codesquad.issue.dto.IssueOverviewDTO;
 import com.codesquad.issue.dto.IssueOverviewListDTO;
@@ -8,7 +7,6 @@ import com.codesquad.issue.dto.LabelDTO;
 import com.codesquad.issue.dto.UserDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @DisplayName("이슈 서비스 테스트")
