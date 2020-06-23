@@ -31,7 +31,9 @@ VALUES ('uuid3', '[BE] DB 설계', 'DB 설계하기', true, '2020-06-07T05:25:10
 
 INSERT INTO comment (content, created_at, issue, writer)
 VALUES ('뭐야 이거', '2020-06-04T14:25:10', 1, 1),
-       ('확인~~', '2020-06-03T11:25:10', 2, 3);
+       ('확인~~', '2020-06-03T11:25:10', 2, 3),
+       ('이것은 코멘트여', '2020-06-03T12:25:10', 2, 1),
+       ('이건 댓글이여', '2020-06-03T14:25:10', 2, 2);
 
 INSERT INTO issue_label (issue, label)
 VALUES (1,1),

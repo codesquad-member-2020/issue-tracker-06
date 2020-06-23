@@ -2,12 +2,10 @@ package com.codesquad.issue.controller;
 
 import com.codesquad.issue.application.IssueService;
 import com.codesquad.issue.domain.RequestIssue;
+import com.codesquad.issue.dto.IssueDetailDTO;
 import com.codesquad.issue.dto.IssueOverviewListDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-
 
 @RestController
 @RequestMapping("/api/issues")
@@ -32,6 +30,11 @@ public class IssueController {
     public  ResponseEntity<String> addIssue(@RequestBody RequestIssue issue) {
         issueService.addIssue(issue);
         return ResponseEntity.ok().body("성공");
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<IssueDetailDTO> getIssueDetail(@PathVariable Integer id) {
+        return ResponseEntity.ok(issueService.getIssueDetail(id));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.codesquad.issue.application;
 
 import com.codesquad.issue.domain.*;
+import com.codesquad.issue.dto.IssueDetailDTO;
 import com.codesquad.issue.dto.IssueOverviewListDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,5 +58,9 @@ public class IssueService {
 
         requestIssue.getAssignees()
                 .forEach(userId -> userDAO.addAssignees(userId, issueId));
+    }
+
+    public IssueDetailDTO getIssueDetail(Integer id) {
+        return issueDAO.getIssueDetail(id);
     }
 }
