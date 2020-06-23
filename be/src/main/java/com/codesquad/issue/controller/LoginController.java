@@ -57,7 +57,7 @@ public class LoginController {
             cookie.setPath("/");
             response.addCookie(cookie);
         }
-        response.sendRedirect(GithubProperties.REDIRECT_TO_MAIN);
+        response.sendRedirect(GithubProperties.REDIRECT_TO_ISSUES);
         return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).body("redirect to main");
     }
 
