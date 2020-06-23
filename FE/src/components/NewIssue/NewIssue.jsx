@@ -3,12 +3,12 @@ import Header from '@/components/header/Header';
 import Wrap from '@/components/Layout/Wrap';
 import { Grid } from '@material-ui/core';
 import styled from 'styled-components';
-
+import { getCookie } from '@/lib/util/cookie';
 import IssueInfo from '@/components/IssueInfo/IssueInfo';
 
 const userInfo = {
-  id: '@hyewon3938',
-  url: 'https://avatars1.githubusercontent.com/u/58355499?s=40&v=4'
+  id: getCookie('id'),
+  url: getCookie('profile')
 };
 
 const NewIssue = () => {
