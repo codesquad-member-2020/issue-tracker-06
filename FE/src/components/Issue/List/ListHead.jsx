@@ -13,7 +13,7 @@ const headCells = [
 
 const authorList = [{ value: 'hyewon3938' }, { value: 'kiyoesjh' }, { value: 'beemiel' }];
 const labelList = [{ value: 'BE' }, { value: 'FE' }, { value: 'feature' }];
-const milestoneList = [{ value: '[BE]1주차' }, { value: '[BE]2주차' }, { value: '[FE]1주차' }];
+const milestoneList = [{ value: '[BE] 1주차' }, { value: '[BE] 2주차' }, { value: '[FE] 1주차' }];
 const assigneeList = [{ value: 'hyewon3938' }, { value: 'kiyoesjh' }, { value: 'beemiel' }];
 
 const ListHead = ({ listData, selected, setSelected }) => {
@@ -35,7 +35,7 @@ const ListHead = ({ listData, selected, setSelected }) => {
 
   const handleAllSelected = (event) => {
     if (event.target.checked) {
-      const newSelecteds = listData.map((list) => list.id);
+      const newSelecteds = listData.map((list) => list.issue_id);
       return setSelected(newSelecteds);
     }
     return setSelected([]);

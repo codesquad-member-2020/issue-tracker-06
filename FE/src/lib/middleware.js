@@ -1,14 +1,6 @@
-import {
-  setFilterQuery,
-  clearFilter,
-  setIsOpen,
-  setAssignee,
-  setLabel,
-  setAuthor,
-  setMilestone,
-  setIssueList
-} from '@/actions/issueListAction';
+import { setFilterQuery, clearFilter } from '@/actions/issueListAction';
 import { addIssueInfo } from '@/actions/issueInfoAction';
+import { GET_START_ISSUE_LIST, setNewIssueList } from '@/actions/issueDataAction';
 import axios from 'axios';
 
 const loggerMiddleware = (store) => (next) => (action) => {
@@ -23,11 +15,9 @@ const loggerMiddleware = (store) => (next) => (action) => {
 const filterQueryMiddleware = (store) => (dispatch) => (action) => {
   if (action.type === 'clearFilter') return dispatch(clearFilter());
   if (action.type === 'addIssueInfo') return dispatch(addIssueInfo(action.modal, action.payload));
-  if (action.type === 'getIssueList')
-    return axios.get(process.env.FILTER + `is_open=${true}`).then((response) => {
-      console.log(response.data);
-      dispatch(setIssueList(response.data));
-    });
+  if (action.type === GET_START_ISSUE_LIST) {
+    return requestIssueList();
+  }
 
   const { filter, value } = action.payload;
   const { isOpen, Assignee, Label, Author, Milestone } = store.getState().issueListReducer;
@@ -52,15 +42,31 @@ const filterQueryMiddleware = (store) => (dispatch) => (action) => {
     return axios
       .get(
         process.env.FILTER +
-          `is_open=${isOpen}&assignee=${Assignee}&label=${Label}&author=${Author}&milestone=${Milestone}`
+          `is_open=${isOpen}&assignee=${Assignee}&label=${Label}&author=${Author}&milestone=${Milestone}`,
+        {
+          headers: {
+            Authorization: 'Bearer jwtToken'
+          }
+        }
       )
       .then((response) => {
-        console.log(response.data);
-        dispatch(setIssueList(response.data));
+        dispatch(setNewIssueList(response.data));
       });
   };
 
   send(param);
+
+  function requestIssueList() {
+    return axios
+      .get(`${process.env.FILTER}is_open=true`, {
+        headers: {
+          Authorization: 'Bearer jwtToken'
+        }
+      })
+      .then((res) => {
+        dispatch(setNewIssueList(res.data));
+      });
+  }
 };
 
 export { loggerMiddleware, filterQueryMiddleware };

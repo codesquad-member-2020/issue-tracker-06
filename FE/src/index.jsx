@@ -7,6 +7,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { issueListReducer } from '@/reducers/issueListReducer';
 import { issueInfoReducer } from '@/reducers/issueInfoReducer';
+import issueDataReducer from '@/reducers/issueDataReducer';
 
 import { loggerMiddleware, filterQueryMiddleware, issueInfoMiddleware } from '@/lib/middleware';
 
@@ -14,7 +15,8 @@ const rootElement = document.getElementById('root');
 
 const rootReducer = combineReducers({
   issueListReducer,
-  issueInfoReducer
+  issueInfoReducer,
+  issueDataReducer
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(loggerMiddleware, filterQueryMiddleware)));
