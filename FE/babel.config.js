@@ -6,6 +6,7 @@ module.exports = {
   plugins: [
     '@babel/proposal-class-properties',
     '@babel/syntax-dynamic-import',
+    '@babel/plugin-transform-runtime',
     [
       'babel-plugin-named-asset-import',
       { loaderMap: { svg: { ReactComponent: '@svgr/webpack?-svgo, +titleProp, +ref![path]' } } }
