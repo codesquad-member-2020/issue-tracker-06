@@ -26,6 +26,34 @@ labels과 assignees의 데이터가 존재하지 않으면 `빈 배열`
 유저의 profile_image는 데이터가 없는 경우 `빈 문자열` 로 나옴
 include::../../../build/generated-snippets/issue-controller-test/get-issue-list/http-response.adoc[]
 
+== GET 라벨
+모든 라벨을 가져온다.
+
+=== HTTP Request
+include::../../../build/generated-snippets/filter-controller-test/get-all-labels/http-request.adoc[]
+
+=== HTTP Response
+include::../../../build/generated-snippets/filter-controller-test/get-all-labels/http-response.adoc[]
+
+== GET 마일스톤
+모든 마일스톤을 가져온다.
+
+=== HTTP Request
+include::../../../build/generated-snippets/filter-controller-test/get-all-milestone/http-request.adoc[]
+
+=== HTTP Response
+include::../../../build/generated-snippets/filter-controller-test/get-all-milestone/http-response.adoc[]
+
+== GET 유저
+모든 유저를 가져온다.
+
+=== HTTP Request
+include::../../../build/generated-snippets/filter-controller-test/get-all-user/http-request.adoc[]
+
+=== HTTP Response
+include::../../../build/generated-snippets/filter-controller-test/get-all-user/http-response.adoc[]
+
+
 == POST 이슈
 이슈를 작성한다.
 
@@ -40,3 +68,12 @@ include::../../../build/generated-snippets/issue-controller-test/add-issue/reque
 
 === HTTP Response
 include::../../../build/generated-snippets/issue-controller-test/add-issue/http-response.adoc[]
+
+== GET 깃헙 로그인
+깃헙 로그인 페이지로 리다이렉트한다.
+
+=== HTTP Request
+include::../../../build/generated-snippets/login-controller-test/redirect-to-github/http-request.adoc[]
+
+=== HTTP Response
+include::../../../build/generated-snippets/login-controller-test/redirect-to-github/http-response.adoc[]
