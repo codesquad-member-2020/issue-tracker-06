@@ -67,4 +67,9 @@ public class UserDAO {
         String sql = "INSERT INTO assignee (issue, user) VALUES (?, ?)";
         jdbcTemplate.update(sql, issueId, userId);
     }
+
+    public Integer getUserIdWithName(String name) {
+        String sql = "SELECT user_id FROM user WHERE name = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[] {name}, Integer.class);
+    }
 }

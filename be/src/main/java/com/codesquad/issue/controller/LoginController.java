@@ -30,12 +30,14 @@ public class LoginController {
     }
 
     @GetMapping
-    public void getLogin(HttpServletResponse response) throws IOException {
+    public ResponseEntity<String> getLogin(HttpServletResponse response) throws IOException {
         String url = GithubProperties.GITHUB_LOGIN_URL
                 + GithubProperties.CLIENT_ID
                 + GithubProperties.REDIRECT_TO
                 + GithubProperties.REDIRECT_URL;
         response.sendRedirect(url);
+
+        return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).body("redirect to github login");
     }
 
     @GetMapping("/github")
@@ -45,12 +47,14 @@ public class LoginController {
 
         loginService.addUser(user);
         String jwt = JwtUtil.buildJwtToken(user);
+        String userId = loginService.getUserId(user.getName());
         log.info("jwt : {}", jwt);
 
         List<Cookie> cookies = Arrays.asList(
                 new Cookie("jwt", jwt),
-                new Cookie("id", user.getName()),
-                new Cookie("profile", user.getProfileImage())
+                new Cookie("user_name", user.getName()),
+                new Cookie("user_profile", user.getProfileImage()),
+                new Cookie("user_id", userId)
         );
 
         for (Cookie cookie: cookies) {

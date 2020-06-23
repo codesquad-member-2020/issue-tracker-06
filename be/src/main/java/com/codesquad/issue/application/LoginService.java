@@ -59,4 +59,7 @@ public class LoginService {
         userDAO.addUser(user);
     }
 
+    public String getUserId(String name) {
+        return userDAO.getUserIdWithName(name).toString();
+    }
 }
