@@ -21,6 +21,7 @@ const issueInfoReducer = (state = initialState, action) => {
         ...state,
         milestone: action.payload
       };
+
     default:
       return state;
   }

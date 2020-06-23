@@ -24,9 +24,11 @@ const List = ({ bodyCells, selected, setSelected }) => {
     setSelected(newSelected);
   };
 
-  return (
+  return !bodyCells ? (
+    ''
+  ) : (
     <div>
-      {bodyCells.map((bodyCell) => {
+      {bodyCells.map((bodyCell, index) => {
         return (
           <ContainerGrid container spacing={4} key={bodyCell.issue_id}>
             <Grid item>
