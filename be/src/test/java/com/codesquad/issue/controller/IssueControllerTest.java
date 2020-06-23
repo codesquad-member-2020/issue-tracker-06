@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -136,6 +137,62 @@ class IssueControllerTest {
                                 fieldWithPath("milestone").description("선택한 마일스톤").type(Integer.class),
                                 fieldWithPath("assignees[]").description("assignees 리스트").type(ArrayList.class),
                                 fieldWithPath("labels[]").description("label 리스트").type(ArrayList.class)
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("이슈 상세보기")
+    void getIssueDetail() throws Exception {
+        List<UserDTO> users = Arrays.asList(
+                UserDTO.builder().userId(1L).name("lynn").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build(),
+                UserDTO.builder().userId(2L).name("ari").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build(),
+                UserDTO.builder().userId(3L).name("joy").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build()
+        );
+
+        List<LabelDTO> labels = Arrays.asList(
+                LabelDTO.builder().labelId(1).title("BE").background("#fcb27e").text("#ffffff").description("백엔드").build(),
+                LabelDTO.builder().labelId(1).title("FE").background("#fcb27e").text("#ffffff").description("백엔드").build()
+        );
+
+        List<CommentDTO> comments = Arrays.asList(
+                CommentDTO.builder().createdAt("2020-06-24").writer(UserDTO.builder().userId(1L).name("lynn").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build()).content("댓글1").commentId(1).build(),
+                CommentDTO.builder().createdAt("2020-06-24").writer(UserDTO.builder().userId(2L).name("ari").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build()).content("댓글2").commentId(2).build(),
+                CommentDTO.builder().createdAt("2020-06-24").writer(UserDTO.builder().userId(3L).name("joy").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build()).content("댓글3").commentId(3).build()
+        );
+
+        IssueDetailDTO issueDetailDTO = IssueDetailDTO.builder()
+                .assignees(users)
+                .comments(comments)
+                .content("내용")
+                .createdAt("2020-06-24")
+                .isOpen(true)
+                .issueId(1)
+                .labels(labels)
+                .milestone(MilestoneDTO.builder()
+                        .milestoneId(1)
+                        .title("마일스톤 제목").build())
+                .numberOfComment(3)
+                .title("이슈 제목")
+                .writer(UserDTO.builder()
+                        .userId(1L)
+                        .name("lynn")
+                        .profileImage("url").build())
+                .build();
+
+        when(issueController.getIssueDetail(any())).thenReturn(ResponseEntity.ok(issueDetailDTO));
+
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/issues/{id}", 2)
+                .header(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + "jwtToken"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("title", is("이슈 제목")))
+                .andExpect(jsonPath("assignees[0].name", is("lynn")))
+                .andDo(document(
+                        "{class-name}/{method-name}",
+                        preprocessRequest(modifyUris().host("13.209.210.21").port(8080), prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        pathParameters(
+                                parameterWithName("id").description("이슈의 id")
                         )
                 ));
     }
