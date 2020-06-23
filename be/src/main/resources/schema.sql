@@ -29,7 +29,7 @@ create table user (
     user_id int primary key auto_increment,
     name varchar (255),
     password varchar (255),
-    profile_image varchar (255)
+    profile_image varchar (255) default 'https://avatars0.githubusercontent.com/u/33659848?s=400&v=4'
 );
 
 create table issue (

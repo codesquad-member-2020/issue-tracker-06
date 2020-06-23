@@ -1,17 +1,17 @@
 use issue;
 
 INSERT INTO user (name, password, profile_image)
-VALUES ('lynn', 'lynn', 'https://avatars0.githubusercontent.com/u/58145890?v=4'),
-       ('ari', 'ari', ''),
-       ('joy', 'joy', ''),
-       ('ari_joy', 'ari_joy', '');
+VALUES ('lynn', 'lynn', 'https://ca.slack-edge.com/T74H5245A-URQ8K2R43-1fa8354b8820-512'),
+       ('ari', 'ari', 'https://ca.slack-edge.com/T74H5245A-URXGCRKC5-f6ea34e9339f-512'),
+       ('joy', 'joy', 'https://ca.slack-edge.com/T74H5245A-US159PX2S-cc84cf6304d2-512'),
+       ('ari_joy', 'ari_joy', 'https://avatars0.githubusercontent.com/u/33659848?s=400&v=4');
 
 INSERT INTO label (title, background_color, text_color, description)
-VALUES ('BE', '#fcb27e', '#ffffff', '백엔드'),
-       ('FE', '#0a2f6b', '#ffffff', '프론트엔드'),
-       ('feature', '#68ff36', '#ffffff', '기능 추가'),
-       ('enhancement', '#a2eeef', '#ffffff', 'New feature or request'),
-       ('scrum', '#a2eeef', '#ffffff', 'scrum');
+VALUES ('BE', '#F76B4D', '#000000', '백엔드'),
+       ('FE', '#B48CFE', '#000000', '프론트엔드'),
+       ('feature', '#2F2FDE', '#ffffff', '기능 추가'),
+       ('enhancement', '#39489e', '#ffffff', 'New feature or request'),
+       ('scrum', '#559434', '#ffffff', 'scrum');
 
 INSERT INTO milestone (title, due_by, description)
 VALUES ('[BE] 1주차', '2020-06-05', '1주차'),
