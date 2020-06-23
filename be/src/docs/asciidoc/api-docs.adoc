@@ -77,3 +77,14 @@ include::../../../build/generated-snippets/login-controller-test/redirect-to-git
 
 === HTTP Response
 include::../../../build/generated-snippets/login-controller-test/redirect-to-github/http-response.adoc[]
+
+== GET 이슈 상세
+이슈의 상세정보를 가져온다
+
+=== HTTP Request
+include::../../../build/generated-snippets/issue-controller-test/get-issue-detail/http-request.adoc[]
+include::../../../build/generated-snippets/issue-controller-test/get-issue-detail/path-parameters.adoc[]
+
+
+=== HTTP Response
+include::../../../build/generated-snippets/issue-controller-test/get-issue-detail/http-response.adoc[]
