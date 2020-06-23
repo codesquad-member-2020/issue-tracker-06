@@ -53,22 +53,10 @@ class IssueControllerTest {
                 LabelDTO.builder().labelId(1).title("BE").background("#fcb27e").text("#ffffff").description("백엔드").build()
         );
 
-        List<LabelDTO> allLabel = Arrays.asList(
-                LabelDTO.builder().labelId(1).title("BE").background("#fcb27e").text("#ffffff").description("백엔드").build(),
-                LabelDTO.builder().labelId(1).title("FE").background("#0a2f6b").text("#ffffff").description("프론트엔드").build(),
-                LabelDTO.builder().labelId(1).title("scrum").background("#68ff36").text("#ffffff").description("스크럼").build()
-        );
-
-        List<MilestoneDTO> milestones = Arrays.asList(
-                MilestoneDTO.builder().milestoneId(1).title("[BE] 1주차").description("1주차").due_by("2020-06-05").build(),
-                MilestoneDTO.builder().milestoneId(2).title("[BE] 2주차").description("2주차").due_by("2020-06-12").build(),
-                MilestoneDTO.builder().milestoneId(3).title("[FE] 1주차").description("1주차").due_by("2020-06-06").build()
-        );
-
         List<UserDTO> users = Arrays.asList(
             UserDTO.builder().userId(1L).name("lynn").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build(),
-            UserDTO.builder().userId(2L).name("ari").profileImage("").build(),
-            UserDTO.builder().userId(3L).name("joy").profileImage("").build()
+            UserDTO.builder().userId(2L).name("ari").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build(),
+            UserDTO.builder().userId(3L).name("joy").profileImage("https://avatars0.githubusercontent.com/u/58145890?v=4").build()
         );
 
         List<IssueOverviewDTO> issueOverviewDTOS = Arrays.asList(
@@ -81,10 +69,6 @@ class IssueControllerTest {
                                                                         .numberOfIssue(1)
                                                                         .numberOfLabel(2)
                                                                         .numberOfMilestone(3)
-                                                                        .author(users)
-                                                                        .label(allLabel)
-                                                                        .milestones(milestones)
-                                                                        .assignee(users)
                                                                         .overviews(issueOverviewDTOS).build();
 
         MultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();

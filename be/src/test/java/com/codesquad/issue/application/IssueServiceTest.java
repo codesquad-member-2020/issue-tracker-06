@@ -110,10 +110,6 @@ class IssueServiceTest {
         assertThat(issueOverviewListDTO.getNumberOfLabel()).isEqualTo(5);
         assertThat(issueOverviewListDTO.getNumberOfIssue()).isEqualTo(7);
         assertThat(issueOverviewListDTO.getNumberOfMilestone()).isEqualTo(3);
-        assertThat(issueOverviewListDTO.getAuthor()).hasSize(4);
-        assertThat(issueOverviewListDTO.getAssignee()).hasSize(4);
-        assertThat(issueOverviewListDTO.getLabel()).hasSize(5);
-        assertThat(issueOverviewListDTO.getMilestones()).hasSize(3);
         assertThat(issueOverviewListDTO.getOverviews()).hasSize(7);
     }
 

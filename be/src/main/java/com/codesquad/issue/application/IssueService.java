@@ -2,11 +2,8 @@ package com.codesquad.issue.application;
 
 import com.codesquad.issue.domain.*;
 import com.codesquad.issue.dto.IssueOverviewListDTO;
-import com.codesquad.issue.dto.UserDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -28,16 +25,10 @@ public class IssueService {
     }
 
     public IssueOverviewListDTO getIssueOverviewListDTO(String is_open, String assignee, String label, String author, String milestone) {
-        List<UserDTO> allUser = userDAO.getAllUser();
-
         return IssueOverviewListDTO.builder()
                                     .numberOfLabel(labelDAO.getLabelCount())
                                     .numberOfMilestone(milestoneDAO.getMilestoneCount())
                                     .numberOfIssue(issueDAO.getIssueCount())
-                                    .author(allUser)
-                                    .label(labelDAO.getAllLabel())
-                                    .milestones(milestoneDAO.getAllMilestone())
-                                    .assignee(allUser)
                                     .overviews(issueDAO.getIssuesWithFilter(is_open, assignee, label, author, milestone))
                                     .build();
     }
