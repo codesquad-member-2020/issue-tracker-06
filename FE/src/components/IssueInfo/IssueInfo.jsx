@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import Brightness5OutlinedIcon from '@material-ui/icons/Brightness5Outlined';
 import IssueInfoModal from '@/components/IssueInfo/IssueInfoModal/IssueInfoModal';
 import { useSelector } from 'react-redux';
+import { getCookie } from '@/lib/util/cookie';
+import { addIssueInfo } from '@/actions/issueInfoAction';
+import { useDispatch } from 'react-redux';
 
 const IssueInfo = () => {
+  const dispatch = useDispatch();
   const [assigneesVisible, setAssigneesVisible] = useState(false);
   const [labelsVisible, setLabelsVisible] = useState(false);
   const [milestoneVisible, setMilestoneVisible] = useState(false);
@@ -58,6 +62,10 @@ const IssueInfo = () => {
 
   const infoClickHandler = () => {};
 
+  const assignYourselfClickHandler = () => {
+    dispatch(addIssueInfo('assignee', { user_name: userInfo.id, user_image: userInfo.url }, true));
+  };
+
   return (
     <>
       <Wrap>
@@ -77,7 +85,7 @@ const IssueInfo = () => {
           <Content>
             {assignees.length === 0 ? (
               <div>
-                No one — <span>assign yourself</span>
+                No one — <span onClick={assignYourselfClickHandler}>assign yourself</span>
               </div>
             ) : (
               assignees.map((list, index) => {
@@ -190,6 +198,7 @@ const Content = styled.div`
     font-size: ${({ theme }) => theme.fontSize.base};
     :hover {
       color: ${({ theme }) => theme.mainBlueColor};
+      cursor: pointer;
     }
   }
 `;
