@@ -9,16 +9,12 @@ const issueInfoReducer = (state = initialState, action) => {
     case 'assignee':
       return {
         ...state,
-        assignees: state.assignees.concat({
-          user_name: action.payload.user_name,
-          user_image: action.payload.user_image,
-          isChecked: action.isChecked
-        })
+        assignees: action.payload
       };
     case 'label':
       return {
         ...state,
-        labels: state.labels.concat(action.payload)
+        labels: action.payload
       };
     case 'milestone':
       return {

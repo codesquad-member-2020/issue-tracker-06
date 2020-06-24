@@ -13,9 +13,13 @@ import axios from 'axios';
 
 const filterQueryMiddleware = (store) => (dispatch) => (action) => {
   if (action.type === 'clearFilter') return dispatch(clearFilter());
-  if (action.type === 'addIssueInfo') return dispatch(addIssueInfo(action.modal, action.payload, action.isChecked));
+  if (action.type === 'addIssueInfo') return addIssueInfoList(store, action, dispatch);
   if (action.type === GET_START_ISSUE_LIST) {
     return requestIssueList(dispatch);
+  }
+
+  if (action.type === 'deleteIssueInfo') {
+    return deleteInfoList(store, action, dispatch);
   }
 
   const { filter, value } = action.payload;
@@ -27,6 +31,30 @@ const filterQueryMiddleware = (store) => (dispatch) => (action) => {
   const param = { ...state, [filter]: value };
 
   send(dispatch, param);
+};
+
+const addIssueInfoList = (store, action, dispatch) => {
+  if (action.modal === 'assignee') {
+    const list = store.getState().issueInfoReducer.assignees.concat(action.payload);
+    dispatch(addIssueInfo('assignee', list));
+  } else if (action.modal === 'label') {
+    const list = store.getState().issueInfoReducer.labels.concat(action.payload);
+    dispatch(addIssueInfo('label', list));
+  } else if (action.modal === 'milestone') {
+    dispatch(addIssueInfo('milestone', action.payload));
+  }
+};
+
+const deleteInfoList = (store, action, dispatch) => {
+  const { assignees, labels } = store.getState().issueInfoReducer;
+
+  if (action.modal === 'assignee') {
+    const deleteIndex = assignees.findIndex((item) => item.user_name === action.payload.user_name);
+    assignees.splice(deleteIndex, 1);
+  } else if (action.modal === 'label') {
+    const deleteIndex = labels.findIndex((item) => item.title === action.payload.title);
+    labels.splice(deleteIndex, 1);
+  }
 };
 
 const makeFilterQuery = (dispatch, store, filter, value) => {
@@ -48,7 +76,7 @@ const send = (dispatch, { isOpen, Assignee, Label, Author, Milestone }) => {
   return axios
     .get(
       process.env.FILTER +
-        `is_open=${isOpen}&assignee=${Assignee}&label=${Label}&author=${Author}&milestone=${Milestone}`,
+        encodeURI(`is_open=${isOpen}&assignee=${Assignee}&label=${Label}&author=${Author}&milestone=${Milestone}`),
       {
         headers: {
           Authorization: 'Bearer jwtToken'

@@ -1,9 +1,16 @@
-export const addIssueInfo = (modal, payload, isChecked) => {
+export const addIssueInfo = (modal, payload) => {
   return {
     type: 'addIssueInfo',
     payload,
-    modal,
-    isChecked
+    modal
+  };
+};
+
+export const deleteIssueInfo = (modal, payload) => {
+  return {
+    type: 'deleteIssueInfo',
+    payload,
+    modal
   };
 };
 
