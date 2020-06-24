@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '@/components/header/Header';
-import logo from '@/image/logo.png';
-import nameLogo from '@/image/nameLogo.png';
-import backgroundImage from '@/image/backgroundImage.png';
+import '@/image/logo.png';
+import '@/image/nameLogo.png';
+import '@/image/backgroundImage.png';
 
 const Wrap = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: Center;
   align-items: center;
   width: 100%;
@@ -15,8 +14,34 @@ const Wrap = styled.div`
   background: url('backgroundImage.png');
   background-repeat: no-repeat;
   background-size: cover;
+  position: relative;
 `;
 
+const ContentWrap = styled.div`
+  width: 450px;
+  margin-right: 50px;
+`;
+const ContentTitle = styled.div`
+  font-size: 55px;
+  line-height: 60px;
+  color: white;
+  font-weight: 600;
+  margin-bottom: 25px;
+`;
+const Content = styled.div`
+  font-size: ${({ theme }) => theme.fontSize.large};
+  color: #a7aaac;
+  line-height: 30px;
+`;
+
+const Attributor = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #6d6c6f;
+  font-size: ${({ theme }) => theme.fontSize.small};
+  margin: 10px;
+`;
 const LoginWrap = styled.div`
   width: 400px;
   height: 500px;
@@ -88,6 +113,17 @@ const Main = () => {
     <>
       <Header />
       <Wrap>
+        <ContentWrap>
+          <Attributor>@Ari @Joy @Lynn</Attributor>
+          <ContentTitle>
+            Built for developers, <br />
+            Issue Tracker
+          </ContentTitle>
+          <Content>
+            Issue Tracker is a development platform inspired by the way you work and Built for developers. you can
+            manage projects with using issue, milestone, label
+          </Content>
+        </ContentWrap>
         <LoginWrap>
           <LoginMessage>Sign in to Issues</LoginMessage>
           <InputWrap>
