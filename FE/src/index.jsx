@@ -9,7 +9,8 @@ import { issueListReducer } from '@/reducers/issueListReducer';
 import { issueInfoReducer } from '@/reducers/issueInfoReducer';
 import issueDataReducer from '@/reducers/issueDataReducer';
 
-import { loggerMiddleware, filterQueryMiddleware, issueInfoMiddleware } from '@/lib/middleware';
+import { loggerMiddleware } from '@/lib/middlewareLogger';
+import { filterQueryMiddleware } from '@/middleware/middleware';
 
 const rootElement = document.getElementById('root');
 
