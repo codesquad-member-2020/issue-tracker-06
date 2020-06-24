@@ -25,6 +25,11 @@ const IssueInfo = () => {
     { user_name: 'beemiel', user_image: 'https://avatars0.githubusercontent.com/u/58145890?s=120&v=4' }
   ];
 
+  const userInfo = {
+    id: getCookie('user_name'),
+    url: getCookie('user_profile')
+  };
+
   const infoClick = {
     assignees: () => {
       setAssigneesVisible(!assigneesVisible);

@@ -3,12 +3,12 @@ import Header from '@/components/header/Header';
 import Wrap from '@/components/Layout/Wrap';
 import { Grid } from '@material-ui/core';
 import styled from 'styled-components';
-import { getCookie } from '@/lib/util/cookie';
 import IssueInfo from '@/components/IssueInfo/IssueInfo';
+import { getCookie } from '@/lib/util/cookie';
 
 const userInfo = {
-  id: getCookie('id'),
-  url: getCookie('profile')
+  id: getCookie('user_name'),
+  url: getCookie('user_profile')
 };
 
 const NewIssue = () => {
