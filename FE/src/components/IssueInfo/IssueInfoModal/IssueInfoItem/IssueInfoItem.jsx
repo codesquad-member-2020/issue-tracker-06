@@ -1,15 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import CheckIcon from '@material-ui/icons/Check';
 
 import { addIssueInfo } from '@/actions/issueInfoAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const IssueInfoItem = ({ modal, list }) => {
+  const { issueInfoReducer } = useSelector((state) => state);
+  const { assignees, labels, milestone } = issueInfoReducer;
+
+  // const getIsChecked = (category, list) => {
+  //   let found = '';
+  //   switch (category) {
+  //     case 'label':
+  //       if (labels.length === 0) return;
+
+  //       found = labels.find((element) => element.user_name === list.user_name);
+  //       return found.isChecked;
+  //     case 'assignee':
+  //       if (assignees.length === 0) return;
+  //       found = assignees.find((element) => element.user_name === list.user_name);
+  //       return found.isChecked;
+  //     case 'milestone':
+  //       if (milestone.length === 0) return;
+  //       found = milestone.find((element) => element.user_name === list.user_name);
+  //       return found.isChecked;
+  //     default:
+  //       return false;
+  //   }
+  // };
   const dispatch = useDispatch();
   const [isChecked, setIsChecked] = useState(false);
   const [iconColor, setIconColor] = useState('#586069');
 
+  // useEffect(() => {
+  //   setIsChecked(getIsChecked(modal, list));
+  // }, []);
   const infoItems = {
     label: (list) => {
       return (
@@ -41,7 +67,7 @@ const IssueInfoItem = ({ modal, list }) => {
 
   const itemClickHandler = (modal, list) => {
     setIsChecked(!isChecked);
-    dispatch(addIssueInfo(modal, list));
+    dispatch(addIssueInfo(modal, list, !isChecked));
   };
 
   return (
