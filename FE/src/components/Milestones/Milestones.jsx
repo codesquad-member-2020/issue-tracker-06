@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   width: 1000px;
   box-sizing: border-box;
   color: ${({ theme }) => theme.mainFontColor};
-  margin-top: 25px;
+  margin-top: 50px;
 `;
 
 const ButtonWrapper = styled.div`

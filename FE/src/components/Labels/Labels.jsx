@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   margin: auto;
   width: 1000px;
   box-sizing: border-box;
-  margin-top: 25px;
+  margin-top: 50px;
   color: ${({ theme }) => theme.mainFontColor};
 `;
 
