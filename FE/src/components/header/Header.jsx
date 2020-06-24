@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import whiteLogo from '@/image/whiteLogo.png';
 import { getCookie } from '@/lib/util/cookie';
+import { useHistory } from 'react-router-dom';
 
 const userInfo = {
   id: getCookie('user_name'),
@@ -9,9 +10,15 @@ const userInfo = {
 };
 
 const Header = () => {
+  const history = useHistory();
+
+  const logoClickHandler = () => {
+    userInfo.id === '' || !userInfo.id ? history.push('/') : history.push('/issueList');
+  };
+
   return (
     <HeaderWrap>
-      <LogoWrap>
+      <LogoWrap onClick={logoClickHandler}>
         <Logo src={whiteLogo} />
         <span>ISSUES</span>
       </LogoWrap>
@@ -47,6 +54,9 @@ const HeaderWrap = styled.div`
 const LogoWrap = styled.div`
   display: flex;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
   > span {
     margin-left: 5px;
     font-size: 15px;
