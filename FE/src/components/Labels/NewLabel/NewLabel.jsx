@@ -2,6 +2,52 @@ import React from 'react';
 import styled from 'styled-components';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 
+const NewLabel = ({ type, cancelClickHandler, data }) => {
+  const { title, background, color, description } = data;
+  const buttonContent = type === 'new' ? 'Create label' : 'Edit label';
+
+  const colorInputChangeHandler = () => {
+    console.log('change');
+  };
+
+  return (
+    <NewLabelContentWrapper>
+      <NewLabelInputWrapper>
+        <NewLabelTitle>Label name</NewLabelTitle>
+        <NewLabelInput placeholder="Label name" value={title} onChange={() => {}} />
+      </NewLabelInputWrapper>
+      <NewLabelInputWrapper>
+        <NewLabelTitle>Description</NewLabelTitle>
+        <NewLabelInput
+          placeholder="Description (optional)"
+          style={{ width: '390px' }}
+          value={description}
+          onChange={() => {}}
+        />
+      </NewLabelInputWrapper>
+      <NewLabelInputWrapper>
+        <NewLabelTitle>Color</NewLabelTitle>
+        <ColorInputWrapper>
+          <ColorChangeButton style={{ background: background }}>
+            <AutorenewIcon fontSize="small" style={{ color: color }} />
+          </ColorChangeButton>
+          <ColorChangeInput
+            type="text"
+            defaultValue={background === undefined ? '#e8ea80' : background}
+            onChange={colorInputChangeHandler}></ColorChangeInput>
+        </ColorInputWrapper>
+      </NewLabelInputWrapper>
+
+      <NewLabelButtonWrapper>
+        <CancelButton onClick={() => cancelClickHandler(type)}>Cancel</CancelButton>
+        <CreateButton>{buttonContent}</CreateButton>
+      </NewLabelButtonWrapper>
+    </NewLabelContentWrapper>
+  );
+};
+
+export default NewLabel;
+
 const NewLabelContentWrapper = styled.div`
   display: flex;
   margin: 25px 0;
@@ -46,7 +92,7 @@ const ColorChangeButton = styled.button`
 
 const ColorChangeInput = styled.input`
   ${({ theme }) => theme.input};
-  width: 70px;
+  width: 80px;
   height: 30px;
 `;
 
@@ -63,39 +109,5 @@ const CancelButton = styled.button`
 
 const CreateButton = styled.button`
   ${({ theme }) => theme.greenButton};
+  min-width: 105px;
 `;
-
-const colorInputChangeHandler = () => {
-  console.log('change');
-};
-
-const NewLabel = () => {
-  return (
-    <NewLabelContentWrapper>
-      <NewLabelInputWrapper>
-        <NewLabelTitle>Label name</NewLabelTitle>
-        <NewLabelInput placeholder="Label name"></NewLabelInput>
-      </NewLabelInputWrapper>
-      <NewLabelInputWrapper>
-        <NewLabelTitle>Description</NewLabelTitle>
-        <NewLabelInput placeholder="Description (optional)" style={{ width: '390px' }}></NewLabelInput>
-      </NewLabelInputWrapper>
-      <NewLabelInputWrapper>
-        <NewLabelTitle>Color</NewLabelTitle>
-        <ColorInputWrapper>
-          <ColorChangeButton>
-            <AutorenewIcon fontSize="small" />
-          </ColorChangeButton>
-          <ColorChangeInput type="text" defaultValue="#E8EA80" onChange={colorInputChangeHandler}></ColorChangeInput>
-        </ColorInputWrapper>
-      </NewLabelInputWrapper>
-
-      <NewLabelButtonWrapper>
-        <CancelButton>Cancel</CancelButton>
-        <CreateButton>Create label</CreateButton>
-      </NewLabelButtonWrapper>
-    </NewLabelContentWrapper>
-  );
-};
-
-export default NewLabel;
