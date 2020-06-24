@@ -7,14 +7,14 @@ import { setFilterQuery, clearFilter } from '@/actions/issueListAction';
 const headCells = [
   { id: 'tHeadAuthor', label: 'Author' },
   { id: 'tHeadLabel', label: 'Label' },
-  { id: 'tHeadMilestones', label: 'Milestones' },
+  { id: 'tHeadMilestone', label: 'Milestone' },
   { id: 'tHeadAssignee', label: 'Assignee' }
 ];
 
-const authorList = [{ value: 'hyewon3938' }, { value: 'kiyoesjh' }, { value: 'beemiel' }];
-const labelList = [{ value: 'BE' }, { value: 'FE' }, { value: 'feature' }];
-const milestoneList = [{ value: '[BE] 1주차' }, { value: '[BE] 2주차' }, { value: '[FE] 1주차' }];
-const assigneeList = [{ value: 'hyewon3938' }, { value: 'kiyoesjh' }, { value: 'beemiel' }];
+const authorList = [{ value: 'ari' }, { value: 'joy' }, { value: 'lynn' }];
+const labelList = [{ value: 'BE' }, { value: 'FE' }, { value: 'feature' }, { value: 'scrum' }];
+const milestoneList = [{ value: '[BE]1주차' }, { value: '[BE]2주차' }, { value: '[FE]1주차' }];
+const assigneeList = [{ value: 'ari' }, { value: 'joy' }, { value: 'lynn' }];
 
 const ListHead = ({ listData, selected, setSelected }) => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const ListHead = ({ listData, selected, setSelected }) => {
       case 'Label':
         setFilterList(labelList);
         break;
-      case 'Milestones':
+      case 'Milestone':
         setFilterList(milestoneList);
         break;
       case 'Assignee':
