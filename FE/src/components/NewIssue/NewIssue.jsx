@@ -5,6 +5,8 @@ import { Grid } from '@material-ui/core';
 import styled from 'styled-components';
 import IssueInfo from '@/components/IssueInfo/IssueInfo';
 import { getCookie } from '@/lib/util/cookie';
+import { submitNewIssue } from '@/actions/newIssueAction';
+import { useDispatch } from 'react-redux';
 
 const userInfo = {
   id: getCookie('user_name'),
@@ -12,6 +14,13 @@ const userInfo = {
 };
 
 const NewIssue = () => {
+  const dispatch = useDispatch();
+  let titleValue = React.createRef();
+  let contentValue = React.createRef();
+
+  const submitClickHandler = () => {
+    dispatch(submitNewIssue({ title: titleValue.current.value, content: contentValue.current.value }));
+  };
   return (
     <>
       <Header />
@@ -25,18 +34,18 @@ const NewIssue = () => {
           <GridFromWrap item xs={8}>
             <FormWrap>
               <TitileInputWrap>
-                <TitleInput type="text" placeholder="Title" />
+                <TitleInput type="text" placeholder="Title" ref={titleValue} />
               </TitileInputWrap>
               <CommentWrap>
                 <CommentButtonWrap>
                   <WriteTabButton>Write</WriteTabButton>
                 </CommentButtonWrap>
                 <CommentInputWrap>
-                  <CommentInput placeholder="Leave a comment" />
+                  <CommentInput placeholder="Leave a comment" ref={contentValue} />
                 </CommentInputWrap>
                 <ButtonWrap>
                   <button>Cancel</button>
-                  <SubmitButton>Submit new issue</SubmitButton>
+                  <SubmitButton onClick={submitClickHandler}>Submit new issue</SubmitButton>
                 </ButtonWrap>
               </CommentWrap>
             </FormWrap>

@@ -21,6 +21,9 @@ const filterQueryMiddleware = (store) => (dispatch) => (action) => {
   if (action.type === 'deleteIssueInfo') {
     return deleteInfoList(store, action, dispatch);
   }
+  if (action.type === 'submitNewIssue') {
+    return postNewIssue(action, store);
+  }
 
   const { filter, value } = action.payload;
 
@@ -31,6 +34,31 @@ const filterQueryMiddleware = (store) => (dispatch) => (action) => {
   const param = { ...state, [filter]: value };
 
   send(dispatch, param);
+};
+
+const postNewIssue = (action, store) => {
+  const { assignees, labels, milestone } = store.getState().issueInfoReducer;
+  console.log(userInfo.id, action.payload.title, action.payload.content, milestone, assignees, labels);
+  // axios
+  //   .post(
+  //     process.env.NEWISSUE,
+  //     {
+  //       headers: {
+  //         Authorization: 'Bearer jwtToken'
+  //       }
+  //     },
+  //     {
+  //       writer: userInfo.id,
+  //       title: action.payload.title,
+  //       content: action.payload.content,
+  //       milestone: milestone,
+  //       assignees: assignees,
+  //       labels: labels
+  //     }
+  //   )
+  //   .then((response) => {
+  //     console.log(response);
+  //   });
 };
 
 const addIssueInfoList = (store, action, dispatch) => {
