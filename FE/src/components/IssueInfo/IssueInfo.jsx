@@ -24,14 +24,15 @@ const IssueInfo = () => {
   ];
   const milestoneList = [{ title: '[BE]1주차' }, { title: '[BE]2주차' }, { title: '[FE]1주차' }];
   const assigneeList = [
-    { user_name: 'hyewon3938', user_image: 'https://avatars1.githubusercontent.com/u/58355499?s=120&v=4' },
-    { user_name: 'kiyoesjh', user_image: 'https://avatars0.githubusercontent.com/u/58324414?s=120&v=4' },
-    { user_name: 'beemiel', user_image: 'https://avatars0.githubusercontent.com/u/58145890?s=120&v=4' }
+    { user_id: 1, user_name: 'hyewon3938', user_image: 'https://avatars1.githubusercontent.com/u/58355499?s=120&v=4' },
+    { user_id: 2, user_name: 'kiyoesjh', user_image: 'https://avatars0.githubusercontent.com/u/58324414?s=120&v=4' },
+    { user_id: 3, user_name: 'beemiel', user_image: 'https://avatars0.githubusercontent.com/u/58145890?s=120&v=4' }
   ];
 
   const userInfo = {
-    id: getCookie('user_name'),
-    url: getCookie('user_profile')
+    name: getCookie('user_name'),
+    url: getCookie('user_profile'),
+    id: getCookie('user_id')
   };
 
   const infoClick = {
@@ -63,7 +64,9 @@ const IssueInfo = () => {
   const infoClickHandler = () => {};
 
   const assignYourselfClickHandler = () => {
-    dispatch(addIssueInfo('assignee', { user_name: userInfo.id, user_image: userInfo.url }, true));
+    dispatch(
+      addIssueInfo('assignee', { name: userInfo.name, user_id: userInfo.id, profile_image: userInfo.url }, true)
+    );
   };
 
   return (

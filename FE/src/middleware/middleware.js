@@ -10,6 +10,13 @@ import {
 import { addIssueInfo } from '@/actions/issueInfoAction';
 import { GET_START_ISSUE_LIST, setNewIssueList } from '@/actions/issueDataAction';
 import axios from 'axios';
+import { getCookie } from '@/lib/util/cookie';
+
+const userInfo = {
+  name: getCookie('user_name'),
+  url: getCookie('user_profile'),
+  id: getCookie('user_id')
+};
 
 const filterQueryMiddleware = (store) => (dispatch) => (action) => {
   if (action.type === 'clearFilter') return dispatch(clearFilter());
@@ -21,6 +28,9 @@ const filterQueryMiddleware = (store) => (dispatch) => (action) => {
   if (action.type === 'deleteIssueInfo') {
     return deleteInfoList(store, action, dispatch);
   }
+  if (action.type === 'submitNewIssue') {
+    return postNewIssue(action, store);
+  }
 
   const { filter, value } = action.payload;
 
@@ -31,6 +41,31 @@ const filterQueryMiddleware = (store) => (dispatch) => (action) => {
   const param = { ...state, [filter]: value };
 
   send(dispatch, param);
+};
+
+const postNewIssue = (action, store) => {
+  const { assignees, labels, milestone } = store.getState().issueInfoReducer;
+  console.log(userInfo.id, action.payload.title, action.payload.content, milestone, assignees, labels);
+  // axios
+  //   .post(
+  //     process.env.NEWISSUE,
+  //     {
+  //       headers: {
+  //         Authorization: 'Bearer jwtToken'
+  //       }
+  //     },
+  //     {
+  //       writer: userInfo.id,
+  //       title: action.payload.title,
+  //       content: action.payload.content,
+  //       milestone: milestone,
+  //       assignees: assignees,
+  //       labels: labels
+  //     }
+  //   )
+  //   .then((response) => {
+  //     console.log(response);
+  //   });
 };
 
 const addIssueInfoList = (store, action, dispatch) => {
