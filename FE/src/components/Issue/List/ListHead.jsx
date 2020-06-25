@@ -1,37 +1,51 @@
 import React, { useState } from 'react';
 import { Grid, Checkbox, FormControl, Select, MenuItem } from '@material-ui/core';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setFilterQuery, clearFilter } from '@/actions/issueListAction';
-
-const headCells = [
-  { id: 'tHeadAuthor', label: 'Author' },
-  { id: 'tHeadLabel', label: 'Label' },
-  { id: 'tHeadMilestone', label: 'Milestone' },
-  { id: 'tHeadAssignee', label: 'Assignee' }
-];
-
-const authorList = [{ value: 'ari' }, { value: 'joy' }, { value: 'lynn' }];
-const labelList = [{ value: 'BE' }, { value: 'FE' }, { value: 'feature' }, { value: 'scrum' }];
-const milestoneList = [{ value: '[BE]1주차' }, { value: '[BE]2주차' }, { value: '[FE]1주차' }];
-const assigneeList = [{ value: 'ari' }, { value: 'joy' }, { value: 'lynn' }];
+import filterFetch from '@/lib/util/filterFetch';
+import FilterList from './FilterList';
 
 const ListHead = ({ listData, selected, setSelected }) => {
+  const [authorList, setAuthor] = useState([]);
+  const [labelList, setLabel] = useState([]);
+  const [milestoneList, setMilestone] = useState([]);
+  const [assigneeList, setAssignee] = useState([]);
   const dispatch = useDispatch();
-  const [filter, setFilter] = useState('is:open ');
   const listDataLength = !listData ? '' : listData.length;
   const selectedLength = selected.length;
+  const filterHandle = (filter, value) => dispatch(setFilterQuery({ filter, value }));
 
-  const [filterList, setFilterList] = useState([]);
-
-  const handleChange = (event) => {
-    console.log('change');
-    setFilter(event.target.value);
-  };
-
-  const handleClick = (e) => {
-    console.log(e.currentTarget, 'click');
-  };
+  const filterData = [
+    {
+      filter: 'Author',
+      fetchDataHandle: () => filterFetch(process.env.FILTER_USER, setAuthor),
+      data: authorList.map((list) => {
+        return { title: list.name, url: list.profile_image, background: null };
+      })
+    },
+    {
+      filter: 'Label',
+      fetchDataHandle: () => filterFetch(process.env.FILTER_LABELS, setLabel),
+      data: labelList.map((list) => {
+        return { title: list.title, url: null, background: list.background };
+      })
+    },
+    {
+      filter: 'Milestone',
+      fetchDataHandle: () => filterFetch(process.env.FILTER_MILESTONES, setMilestone),
+      data: milestoneList.map((list) => {
+        return { title: list.title, url: null, background: null };
+      })
+    },
+    {
+      filter: 'Assignee',
+      fetchDataHandle: () => filterFetch(process.env.FILTER_USER, setAssignee),
+      data: assigneeList.map((list) => {
+        return { title: list.name, url: list.profile_image, background: null };
+      })
+    }
+  ];
 
   const handleAllSelected = (event) => {
     if (event.target.checked) {
@@ -39,29 +53,6 @@ const ListHead = ({ listData, selected, setSelected }) => {
       return setSelected(newSelecteds);
     }
     return setSelected([]);
-  };
-
-  const fetchFilter = (e, filterId) => {
-    switch (filterId) {
-      case 'Author':
-        setFilterList(authorList);
-        break;
-      case 'Label':
-        setFilterList(labelList);
-        break;
-      case 'Milestone':
-        setFilterList(milestoneList);
-        break;
-      case 'Assignee':
-        setFilterList(assigneeList);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const applyFilter = (filter, value) => {
-    dispatch(setFilterQuery({ filter: filter, value: value }));
   };
 
   return (
@@ -81,32 +72,15 @@ const ListHead = ({ listData, selected, setSelected }) => {
           {' '}
         </Grid>
         {!selectedLength ? (
-          headCells.map((headCell) => {
+          filterData.map((filterList) => {
             return (
-              <GridFilterButton item key={headCell.id}>
-                <FormControlWrap>
-                  <Select
-                    labelId={headCell.label}
-                    id={headCell.id}
-                    displayEmpty
-                    value={headCell.label}
-                    // onChange={handleChange}
-                    onOpen={(e) => fetchFilter(e, headCell.label)}>
-                    <MenuItem value={headCell.label} disabled>
-                      <em>{headCell.label}</em>
-                    </MenuItem>
-                    {filterList
-                      ? filterList.map((list, index) => {
-                          return (
-                            <MenuItem onClick={() => applyFilter(headCell.label, list.value)} key={index}>
-                              {list.value}
-                            </MenuItem>
-                          );
-                        })
-                      : ''}
-                  </Select>
-                </FormControlWrap>
-              </GridFilterButton>
+              <FilterList
+                key={`filter${filterList.filter}`}
+                filter={filterList.filter}
+                clickHandle={filterList.fetchDataHandle}
+                filterHandle={filterHandle}
+                data={filterList.data}
+              />
             );
           })
         ) : (

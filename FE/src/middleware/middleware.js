@@ -9,14 +9,7 @@ import {
 } from '@/actions/issueListAction';
 import { addIssueInfo } from '@/actions/issueInfoAction';
 import { GET_START_ISSUE_LIST, setNewIssueList } from '@/actions/issueDataAction';
-import axios from 'axios';
-import { getCookie } from '@/lib/util/cookie';
-
-const userInfo = {
-  name: getCookie('user_name'),
-  url: getCookie('user_profile'),
-  id: getCookie('user_id')
-};
+import filterFetch from '@/lib/util/filterFetch';
 
 const filterQueryMiddleware = (store) => (dispatch) => (action) => {
   if (action.type === 'clearFilter') return dispatch(clearFilter());
@@ -108,31 +101,15 @@ const makeFilterQuery = (dispatch, store, filter, value) => {
 };
 
 const send = (dispatch, { isOpen, Assignee, Label, Author, Milestone }) => {
-  return axios
-    .get(
-      process.env.FILTER +
-        encodeURI(`is_open=${isOpen}&assignee=${Assignee}&label=${Label}&author=${Author}&milestone=${Milestone}`),
-      {
-        headers: {
-          Authorization: 'Bearer jwtToken'
-        }
-      }
-    )
-    .then((response) => {
-      dispatch(setNewIssueList(response.data));
-    });
+  return filterFetch(
+    process.env.FILTER +
+      encodeURI(`is_open=${isOpen}&assignee=${Assignee}&label=${Label}&author=${Author}&milestone=${Milestone}`),
+    (data) => dispatch(setNewIssueList(data))
+  );
 };
 
 const requestIssueList = (dispatch) => {
-  return axios
-    .get(`${process.env.FILTER}is_open=true`, {
-      headers: {
-        Authorization: 'Bearer jwtToken'
-      }
-    })
-    .then((res) => {
-      dispatch(setNewIssueList(res.data));
-    });
+  return filterFetch(`${process.env.FILTER}is_open=true`, (data) => dispatch(setNewIssueList(data)));
 };
 
 const setFilterData = (dispatch, filter, value) => {
