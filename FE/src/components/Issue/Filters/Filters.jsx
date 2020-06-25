@@ -4,13 +4,11 @@ import styled from 'styled-components';
 import SearchIcon from '@material-ui/icons/Search';
 import LocalOfferOutlinedIcon from '@material-ui/icons/LocalOfferOutlined';
 import EventNoteOutlinedIcon from '@material-ui/icons/EventNoteOutlined';
-
 import { clearFilter } from '@/actions/issueListAction';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-const Filters = () => {
+const Filters = ({ labelLength, milestoneLength }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -25,8 +23,8 @@ const Filters = () => {
   };
 
   const handleChange = (event) => {
-    setFilter(`is:${event.target.value}`);
     dispatch(clearFilter());
+    setFilter(`${event.target.value}`);
   };
 
   const handleClose = () => {
@@ -52,11 +50,11 @@ const Filters = () => {
             <MenuItem value="Filters" disabled>
               <em>Filters</em>
             </MenuItem>
-            <MenuItem value="Open issues">Open issues</MenuItem>
-            <MenuItem value="Your Issues">Your Issues</MenuItem>
-            <MenuItem value="Everything assigned to you">Everything assigned to you</MenuItem>
-            <MenuItem value="Everything mentioning you">Everything mentioning you</MenuItem>
-            <MenuItem value="Close issues">Close issues</MenuItem>
+            <MenuItem value="is:open">Open issues</MenuItem>
+            <MenuItem value="author:@me">Your Issues</MenuItem>
+            <MenuItem value="assignee:@me">Everything assigned to you</MenuItem>
+            <MenuItem value="mentions:@me">Everything mentioning you</MenuItem>
+            <MenuItem value="is:close">Close issues</MenuItem>
           </Select>
         </FormControlWrap>
         <InputBaseWrap
@@ -74,11 +72,11 @@ const Filters = () => {
         <ButtonGroup variant="contained">
           <Button variant="outlined" onClick={() => history.push('/labels')}>
             <LocalOfferOutlinedIcon fontSize="small" style={{ marginRight: '5px' }} />
-            Labels <CircleFill>{0}</CircleFill>
+            Labels <CircleFill>{labelLength}</CircleFill>
           </Button>
           <Button variant="outlined" onClick={() => history.push('/milestones')}>
             <EventNoteOutlinedIcon fontSize="small" style={{ marginRight: '5px' }} />
-            Milestones <CircleFill>{0}</CircleFill>
+            Milestones <CircleFill>{milestoneLength}</CircleFill>
           </Button>
         </ButtonGroup>
         <NewIssueButton onClick={() => history.push('/newIssue')} variant="contained">

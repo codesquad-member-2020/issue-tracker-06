@@ -23,7 +23,7 @@ const Issue = () => {
     <div>
       <Header />
       <Wrap>
-        <Filters />
+        <Filters labelLength={data.number_of_label} milestoneLength={data.number_of_milestone} />
         <ListWrap>
           <ListHead listData={data.overviews} selected={selected} setSelected={setSelected} />
           {/* <List bodyCells={data} selected={selected} setSelected={setSelected} /> */}
